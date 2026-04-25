@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 
 const plex = IBM_Plex_Sans({
@@ -44,6 +45,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${plex.variable} ${mono.variable}`}>
       <body>{children}</body>
+      <GoogleAnalytics gaId="G-BMMF2HFNJW" />
     </html>
   );
 }
