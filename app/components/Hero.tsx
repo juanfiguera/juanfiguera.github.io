@@ -16,7 +16,7 @@ export function Hero() {
         <div>
           <span className="k">Before</span>
           <span className="v">
-            Co-founder, <em>HarvestYield</em> · sold 2025
+            Co-founder, <em>HarvestYield</em> · acquired 2025
           </span>
         </div>
         <div>
