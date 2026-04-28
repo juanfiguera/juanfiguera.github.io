@@ -105,7 +105,7 @@ i {
 .hero h1 {
   font-family: var(--font-plex), system-ui, sans-serif;
   font-weight: 300;
-  font-size: clamp(32px, 4.4vw, 54px);
+  font-size: clamp(28px, 4.4vw, 54px);
   line-height: 1.2;
   letter-spacing: -0.022em;
   color: var(--ink);
@@ -653,5 +653,36 @@ i {
   .contact-links a,
   .contact-links a .arr {
     transition: none;
+  }
+}
+
+/* ——— Mobile refinements ——— */
+@media (max-width: 560px) {
+  .head {
+    padding: 20px 0 36px;
+  }
+  .head-nav {
+    gap: 12px;
+    letter-spacing: 0.12em;
+  }
+  .hero {
+    margin-bottom: clamp(40px, 6vh, 72px);
+  }
+  .hero h1 {
+    margin-bottom: 36px;
+  }
+  .hero-foot .k {
+    display: block;
+    width: auto;
+    margin-bottom: 2px;
+  }
+  .hero-foot {
+    gap: 14px;
+  }
+  .sec {
+    padding: clamp(32px, 5vh, 56px) 0;
+  }
+  .sec-head .tick {
+    display: none;
   }
 }
