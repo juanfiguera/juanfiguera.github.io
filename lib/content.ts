@@ -188,7 +188,7 @@ export const site: Site = {
     {
       date: "2026-05-06",
       slug: "system-prompt-and-vibes",
-      title: "I built Agentic Power of Attorney, then let two AI agents negotiate a YC SAFE on OpenClaw to break it",
+      title: "Two OpenClaw agents negotiate a YC SAFE with Agentic Power of Attorney",
       excerpt: `I gave an AI agent access to act on my behalf a few months ago. Within ten minutes I was scared of it. Not because it did anything wrong. Because I had no way to guarantee it wouldn't. The entire trust model was a system prompt and vibes — so I built APOA to fix it.`,
       youtube: "T2Y2Tr__g_k",
       body: [
