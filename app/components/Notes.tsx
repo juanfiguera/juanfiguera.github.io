@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { formatNoteDate, highlight, site } from "@/lib/content";
 import { SectionHead } from "./SectionHead";
 
@@ -7,15 +8,31 @@ export function Notes() {
   return (
     <section id="notes" className="sec">
       <SectionHead numeral="II">Notes</SectionHead>
-      {notes.map((n) => (
-        <article key={n.slug ?? n.date + n.title} className="note">
-          <div className="date">{formatNoteDate(n.date)}</div>
-          <div>
-            <h4>{n.title}</h4>
-            <p dangerouslySetInnerHTML={{ __html: highlight(n.body) }} />
-          </div>
-        </article>
-      ))}
+      {notes.map((n) => {
+        const isPreview = Boolean(n.excerpt && n.slug);
+        const paragraphs = isPreview
+          ? [n.excerpt as string]
+          : Array.isArray(n.body)
+            ? n.body
+            : [n.body];
+
+        return (
+          <article key={n.slug ?? n.date + n.title} className="note">
+            <div className="date">{formatNoteDate(n.date)}</div>
+            <div>
+              <h4>{n.title}</h4>
+              {paragraphs.map((p, i) => (
+                <p key={i} dangerouslySetInnerHTML={{ __html: highlight(p) }} />
+              ))}
+              {isPreview && (
+                <Link href={`/notes/${n.slug}/`} className="note-more">
+                  Read more →
+                </Link>
+              )}
+            </div>
+          </article>
+        );
+      })}
     </section>
   );
 }

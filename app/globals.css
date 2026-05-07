@@ -78,6 +78,19 @@ i {
 .head .name {
   color: var(--ink);
   font-weight: 500;
+  text-decoration: none;
+}
+.head-back {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.head-back:hover {
+  color: var(--ink);
 }
 .head-nav {
   display: flex;
@@ -530,9 +543,188 @@ i {
   color: var(--ink-soft);
   max-width: 58ch;
   letter-spacing: 0.003em;
+  margin-bottom: 16px;
+}
+.note p:last-child {
+  margin-bottom: 0;
 }
 .note p em {
   font-weight: 400;
+  color: var(--ink);
+}
+.note p a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease;
+}
+.note p a:hover {
+  text-decoration-color: var(--shu);
+}
+.note-more {
+  display: inline-block;
+  margin-top: 4px;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    transform 0.3s ease;
+}
+.note-more:hover {
+  color: var(--ink);
+  transform: translateX(2px);
+}
+
+/* ——— Note detail page ——— */
+.note-page {
+  padding: clamp(40px, 6vh, 72px) 0 clamp(48px, 8vh, 96px);
+}
+.note-page-meta {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 18px;
+}
+.note-page-title {
+  font-family: var(--font-plex), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: clamp(28px, 3.6vw, 40px);
+  line-height: 1.2;
+  letter-spacing: -0.022em;
+  color: var(--ink);
+  max-width: 22ch;
+  margin-bottom: 32px;
+}
+.note-video {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  margin: 0 0 36px;
+  background: var(--paper-deep);
+  border: 1px solid var(--line-soft);
+  overflow: hidden;
+}
+.note-video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.note-page p {
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  max-width: 62ch;
+  letter-spacing: 0.003em;
+  margin-bottom: 18px;
+}
+.note-page p:last-of-type {
+  margin-bottom: 0;
+}
+.note-page p em {
+  font-weight: 500;
+  color: var(--ink);
+}
+.note-page p a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease;
+}
+.note-page p a:hover {
+  text-decoration-color: var(--shu);
+}
+.note-links {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin-top: 44px;
+  border-top: 1px solid var(--line);
+}
+.note-links a {
+  padding: 16px 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "k arr"
+    "v arr";
+  gap: 4px 16px;
+  align-items: baseline;
+  border-bottom: 1px solid var(--line-soft);
+  text-decoration: none;
+  color: var(--ink);
+  transition: padding-left 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.note-links a:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.note-links a:hover {
+  padding-left: 12px;
+}
+.note-links a .k {
+  grid-area: k;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 400;
+}
+.note-links a .v {
+  grid-area: v;
+  font-family: var(--font-plex), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--ink);
+  letter-spacing: -0.003em;
+  word-break: break-all;
+}
+.note-links a .arr {
+  grid-area: arr;
+  align-self: center;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  color: var(--ink-mute);
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease;
+}
+.note-links a:hover .arr {
+  transform: translate(4px, -2px);
+  color: var(--ink);
+}
+
+.note-back {
+  display: inline-block;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line-soft);
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.note-links + .note-back {
+  margin-top: 32px;
+  padding-top: 0;
+  border-top: none;
+}
+.note-back:hover {
   color: var(--ink);
 }
 

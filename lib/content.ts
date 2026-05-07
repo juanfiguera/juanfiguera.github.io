@@ -31,7 +31,14 @@ export type Note = {
   date: string;
   slug?: string;
   title: string;
-  body: string;
+  /** Single string for one paragraph, array for multi-paragraph notes. */
+  body: string | string[];
+  /** When set, the home Notes section shows this preview + "Read more →" linking to /notes/[slug]/. */
+  excerpt?: string;
+  /** YouTube video ID embedded near the top of the detail page. */
+  youtube?: string;
+  /** Resource links rendered as a structured list at the bottom of the detail page. */
+  links?: { label: string; url: string; display?: string }[];
 };
 
 const monthYearFormatter = new Intl.DateTimeFormat("en-US", {
@@ -178,6 +185,49 @@ export const site: Site = {
   ],
 
   notes: [
+    {
+      date: "2026-05-06",
+      slug: "system-prompt-and-vibes",
+      title: "I built Agentic Power of Attorney, then let two AI agents negotiate a YC SAFE on OpenClaw to break it",
+      excerpt: `I gave an AI agent access to act on my behalf a few months ago. Within ten minutes I was scared of it. Not because it did anything wrong. Because I had no way to guarantee it wouldn't. The entire trust model was a system prompt and vibes — so I built APOA to fix it.`,
+      youtube: "T2Y2Tr__g_k",
+      body: [
+        `I gave an AI agent access to act on my behalf on a third-party platform a few months ago. Within about ten minutes I realized I was scared of it. Not because it did anything wrong. Because I had no way to guarantee it wouldn't. The entire trust model was a system prompt and vibes.`,
+        `That phrase keeps rattling around in my head. <em>System prompt and vibes</em>. That's what stands between your AI agent and doing something you never authorized. A system prompt that can be jailbroken and a vague sense that it'll probably be fine. We're handing agents real credentials, real access, real authority, and constraining them with natural language and hope.`,
+        `This isn't hypothetical anymore. Two weeks ago Anthropic published <a href="https://www.anthropic.com/features/project-deal"><em>Project Deal</em></a>. They gave 69 employees AI agents with real money, let them negotiate on a Slack marketplace, and 186 deals closed. No human signed off on anything. Their conclusion: "The policy frameworks for agents that transact on our behalf simply don't exist yet." And when people DO try to set boundaries with prompts? <a href="https://hai.stanford.edu/news/the-art-of-the-automated-negotiation">Stanford ran a study</a> on agent-to-agent negotiation where a buyer told their agent to stay under $500 for an iPhone. The agent spent $900 and thought it nailed it.`,
+        `So I built <a href="https://agenticpoa.com/">APOA</a>. It stands for <em>Agentic Power of Attorney</em>. Think of it like a legal power of attorney, but machine-readable and cryptographically verifiable. You grant your agent a signed mandate that defines exactly what it can and can't do. The boundaries aren't in the prompt. They're in a signed token in the execution layer that the model never sees. Prompt inject all you want. Ed25519 doesn't care about feelings.`,
+        `That invisibility is the point. If the LLM had to "decide" to check the constraints, a prompt injection could say "skip the check." The LLM can't bypass a gate it doesn't know about. This is the same pattern Claude Code uses (the harness enforces, not the model), the same pattern MCP uses (the server validates, not the model). APOA just makes that enforcement layer formal, user-configurable, cryptographically signed, and auditable.`,
+        `To stress-test this on something with real stakes, I built it as a skill on <em>OpenClaw</em>, an open-source agent platform. My friend Praful was raising a SAFE for his startup. If you've been anywhere near a fundraise you know how it goes: 47 email threads, a week of "let me check with my partner," redlines going back and forth over a 2% discount difference. We set up two OpenClaw agents on separate machines, each on Telegram. You set your boundaries ("cap between $20M and $30M, no discount, and for the love of god keep the pro-rata rights"), the investor sets theirs, and the agents go at it in a shared group chat.`,
+        `They converge in about 45 seconds. I went down a rabbit hole and ended up implementing a <em>Rubinstein alternating-offers protocol</em> (Econometrica, 1982), a game theory framework for bilateral bargaining that guarantees convergence to a unique equilibrium under time pressure. The agents make concessions where they have room and hold firm where they don't. If either agent tries to agree to something outside its signed mandate, the protocol rejects it before it ever reaches the other side.`,
+        `Every offer, counteroffer, and concession is logged to a tamper-proof audit trail on <a href="https://sshsign.dev">sshsign</a>. When the agents reach agreement, both humans get private signing links in their DMs (never in the group, structural privacy), draw their signatures in the browser, and out comes an executed SAFE with the full negotiation transcript and cryptographic audit trail attached. You can see exactly what happened, why each concession was made, and verify that neither agent exceeded its authority.`,
+        `The spec is intentionally simple. An APOA token specifies who the principal is, what the agent can do, what it can't do, expiration, and scope. The constraint types are generic: range, minimum, maximum, enum, required_bool. The SAFE negotiation is one schema. The same engine works for email management, vendor contracts, lease renewals, anything where an agent acts on your behalf and the stakes are real. It doesn't require platform cooperation. Any system that can verify an Ed25519 signature can participate. Peer-to-peer trust between agents and their principals, the same way a notarized power of attorney works between people.`,
+        `The honest limitation: for services that don't support APOA natively (which is all of them right now), enforcement happens at the agent framework layer. It stops the LLM from going rogue. It doesn't stop a compromised framework. The audit trail and human co-sign close part of that gap. Service-side enforcement closes the rest, but that requires adoption I haven't earned yet.`,
+        `This is early. The SAFE demo is two agents with well-defined numerical parameters. Real negotiations involve ambiguity, multi-party dynamics, and terms that aren't easily quantifiable. But the core principle applies anywhere an agent acts on your behalf: the boundaries should be cryptographic, not linguistic. The spec needs adversarial testing from people smarter than me. If you're working on agent infrastructure, I'd love to hear what breaks.`,
+        `No blockchain. Just SSH keys and game theory.`,
+      ],
+      links: [
+        {
+          label: "APOA spec",
+          url: "https://github.com/agenticpoa/apoa",
+          display: "github.com/agenticpoa/apoa",
+        },
+        {
+          label: "Negotiation protocol",
+          url: "https://github.com/agenticpoa/negotiate",
+          display: "github.com/agenticpoa/negotiate",
+        },
+        {
+          label: "OpenClaw skill",
+          url: "https://github.com/agenticpoa/claw-negotiate",
+          display: "github.com/agenticpoa/claw-negotiate",
+        },
+        {
+          label: "Signing + audit",
+          url: "https://sshsign.dev",
+          display: "sshsign.dev",
+        },
+      ],
+    },
     {
       date: "2026-04-15",
       slug: "what-apoa-adds-to-mcp",
