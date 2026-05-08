@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { formatNoteDate, highlight, site } from "@/lib/content";
+import { Footer } from "@/app/components/Footer";
 import { Reveal } from "@/app/components/Reveal";
 
 type NotePageProps = {
@@ -89,10 +90,7 @@ export default async function NotePage({ params }: NotePageProps) {
         </Link>
       </Reveal>
 
-      <footer className="foot">
-        <span>© Juan Figuera · 2026</span>
-        <span>Updated May 2026</span>
-      </footer>
+      <Footer />
     </div>
   );
 }

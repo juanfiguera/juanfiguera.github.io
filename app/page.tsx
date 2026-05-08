@@ -1,6 +1,7 @@
 import { About } from "./components/About";
 import { Contact } from "./components/Contact";
 import { Experience } from "./components/Experience";
+import { Footer } from "./components/Footer";
 import { Hero } from "./components/Hero";
 import { Nav } from "./components/Nav";
 import { Notes } from "./components/Notes";
@@ -40,10 +41,7 @@ export default function Page() {
           <Contact />
         </Reveal>
 
-        <Reveal as="footer" className="foot">
-          <span>© Juan Figuera · 2026</span>
-          <span>Updated Apr 2026</span>
-        </Reveal>
+        <Footer />
       </div>
     </>
   );
