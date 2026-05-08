@@ -9,6 +9,7 @@ export type Role = {
   company: string;
   titleSuffix?: string;
   title: string;
+  location?: string;
   context?: string;
   achievements?: Achievement[];
   compact?: boolean;
@@ -90,6 +91,7 @@ export const site: Site = {
       dateRange: "2019 → Now",
       company: "American Express Digital Labs",
       title: "Director, Product Management",
+      location: "New York, NY",
       context:
         "Leading AI personalization and membership products inside the Amex mobile app. Built and mentored a team of product managers across membership and AI initiatives.",
       achievements: [
@@ -115,6 +117,7 @@ export const site: Site = {
       company: "HarvestYield",
       titleSuffix: "Acquired",
       title: "Co-founder & CTO",
+      location: "New York, NY",
       context:
         "B2B agricultural fleet management platform. Built and scaled from zero to acquisition over ten years. Most of what I know about running a real business came from here.",
       achievements: [
@@ -134,6 +137,7 @@ export const site: Site = {
       dateRange: "2013–2015",
       company: "Daily Burn",
       title: "Software Engineer",
+      location: "New York, NY",
       context:
         "Built the fitness recommendation engine that increased user engagement by 25%. Optimized backend API performance by 20%.",
       compact: true,
@@ -142,8 +146,18 @@ export const site: Site = {
       dateRange: "2011–2013",
       company: "Deutsche Bank",
       title: "Associate Business Analyst",
+      location: "New York, NY",
       context:
         "Architected incident management platform for 24/7 monitoring of high-frequency trading systems. Wrote business requirements and UX flows for financial products.",
+      compact: true,
+    },
+    {
+      dateRange: "2008–2009",
+      company: "Tyco Electronics",
+      title: "Product Engineer",
+      location: "Lowell, MA",
+      context:
+        "Coordinated transition of 5 RF semiconductor products from experimental stage to mass production, resulting in a $4M order for an advanced semiconductor developer.",
       compact: true,
     },
   ],
@@ -189,7 +203,7 @@ export const site: Site = {
       date: "2026-05-06",
       slug: "system-prompt-and-vibes",
       title: "Two OpenClaw agents negotiate a YC SAFE with Agentic Power of Attorney",
-      excerpt: `I gave an AI agent access to act on my behalf a few months ago. Within ten minutes I was scared of it. Not because it did anything wrong. Because I had no way to guarantee it wouldn't. The entire trust model was a system prompt and vibes — so I built APOA to fix it.`,
+      excerpt: `I gave an AI agent access to act on my behalf a few months ago. Within ten minutes I was scared of it. Not because it did anything wrong. Because I had no way to guarantee it wouldn't. The entire trust model was a system prompt and vibes. I built APOA as my take on a solution.`,
       youtube: "T2Y2Tr__g_k",
       body: [
         `I gave an AI agent access to act on my behalf on a third-party platform a few months ago. Within about ten minutes I realized I was scared of it. Not because it did anything wrong. Because I had no way to guarantee it wouldn't. The entire trust model was a system prompt and vibes.`,

@@ -22,7 +22,7 @@ export function Hero() {
         <div>
           <span className="k">Building</span>
           <span className="v">
-            <em>APOA</em> — authorization for AI agents
+            <em>APOA</em> — Open Source authorization for AI agents
           </span>
         </div>
       </div>

@@ -6,7 +6,10 @@ function RoleCompact({ role }: { role: Role }) {
     <article className="role role--compact">
       <div className="role-date">{role.dateRange}</div>
       <div className="role-body">
-        <h3>{role.company}</h3>
+        <h3>
+          <span className="co">{role.company}</span>
+          {role.location ? <span className="loc">{role.location}</span> : null}
+        </h3>
         <div className="title">{role.title}</div>
         {role.context ? <p className="ctx">{role.context}</p> : null}
       </div>
@@ -20,10 +23,13 @@ function RoleFull({ role }: { role: Role }) {
       <div className="role-date">{role.dateRange}</div>
       <div className="role-body">
         <h3>
-          {role.company}
-          {role.titleSuffix ? (
-            <span className="exit">{role.titleSuffix}</span>
-          ) : null}
+          <span className="co">
+            {role.company}
+            {role.titleSuffix ? (
+              <span className="exit">{role.titleSuffix}</span>
+            ) : null}
+          </span>
+          {role.location ? <span className="loc">{role.location}</span> : null}
         </h3>
         <div className="title">{role.title}</div>
         {role.context ? <p className="ctx">{role.context}</p> : null}
