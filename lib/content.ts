@@ -220,7 +220,7 @@ export const site: Site = {
 <p>I am being somewhat facetious here: presumably a combination of good old-fashioned pricing constraints and a structured protocol through which LLMs negotiate will keep this behavior in check.</p>
 </blockquote>
 
-<p>That's <em>APOA</em>, Agentic Power of Attorney.</p>
+<p>That's <a href="https://agenticpoa.com/"><em>APOA</em></a>, Agentic Power of Attorney.</p>
 
 <p>Here's an example:</p>
 
@@ -243,7 +243,7 @@ Substitutions:  ask you first
 
 Look right? Reply GO or correct me.</code></pre>
 
-<p>You say GO. Your agent now holds a signed <a href="https://agenticpoa.com/"><em>APOA</em></a> token.</p>
+<p>You say GO. Your agent now holds a signed <em>APOA</em> token.</p>
 
 <pre><code>{
   "principal": "you",
