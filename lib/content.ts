@@ -217,18 +217,12 @@ export const site: Site = {
 <p>Then this:</p>
 
 <blockquote>
-<p>I am being somewhat facetious here: presumably a combination of good old-fashioned pricing constraints and a structured protocol through which LLMs negotiate will keep this behavior in check, at least on the seller side. Still, I would not at all be surprised to see LLM-influencing techniques deployed to varying degrees by both legitimate vendors and scammers. [...] I can't wait to ask my agent to purchase a screwdriver and have it be bamboozled into purchasing kumquat seeds, or wake up to find out that four million people have to cancel their credit cards because their Claude agents fell for a 0-day leetspeak attack.</p>
+<p>I am being somewhat facetious here: presumably a combination of good old-fashioned pricing constraints and a structured protocol through which LLMs negotiate will keep this behavior in check.</p>
 </blockquote>
 
-<p>The line <em>at least on the seller side</em> is where Kyle named what I'd been trying to fix.</p>
+<p>That's <em>APOA</em>, Agentic Power of Attorney.</p>
 
-<p>Sellers have strong market incentives to converge on structured protocols. The buyer side is the open problem. That's where the kumquat seeds and the leetspeak attacks and the $950 grandmother burrito live.</p>
-
-<p>This is not hypothetical. In January, a developer told his agent to buy him a car. It negotiated a $4,200 discount, closed the deal, and also sent a confidential email to the wrong person, because the entire trust model was a system prompt that said "check with me on anything consequential."</p>
-
-<p>I have a working prototype. If you build agent infrastructure, please break this and tell me what falls over.</p>
-
-<p>Here's where I am.</p>
+<p>Here's an example:</p>
 
 <hr />
 
@@ -249,7 +243,7 @@ Substitutions:  ask you first
 
 Look right? Reply GO or correct me.</code></pre>
 
-<p>You say GO. Your agent now holds a signed token. I'm calling it <a href="https://agenticpoa.com/"><em>APOA</em></a>, Agentic Power of Attorney:</p>
+<p>You say GO. Your agent now holds a signed <a href="https://agenticpoa.com/"><em>APOA</em></a> token.</p>
 
 <pre><code>{
   "principal": "you",
@@ -421,7 +415,7 @@ tx_047: order placed        ($19.70 charged)</code></pre>
 
 <h2>Where this leaves Kyle's scenario</h2>
 
-<p>Kyle's diagnosis is right. The obnoxious equilibrium isn't inevitable on the buyer side. If the gate sits between the LLM and the execution layer, dark patterns can be deployed but never reach the part that matters. The grandmother gambit hits a wall that doesn't speak English. The wall runs math.</p>
+<p>Kyle's diagnosis is right, and so is his sketch of the fix. The obnoxious equilibrium isn't inevitable. If the gate sits between the LLM and the execution layer, dark patterns can be deployed but never reach the part that matters. The grandmother gambit hits a wall that doesn't speak English. The wall runs math.</p>
 
 <p>The $90 taco happens only if your token authorized $90. The 600-page transcript becomes seven cryptographically signed audit entries. The kumquat seeds stay on the shelf. The robot covered in glass... fair, can't help with that one.</p>
 
