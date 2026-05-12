@@ -14,7 +14,9 @@ export function Notes() {
           ? [n.excerpt as string]
           : Array.isArray(n.body)
             ? n.body
-            : [n.body];
+            : n.body
+              ? [n.body]
+              : [];
 
         return (
           <article key={n.slug ?? n.date + n.title} className="note">

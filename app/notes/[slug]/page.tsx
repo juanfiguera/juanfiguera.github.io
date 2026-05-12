@@ -20,8 +20,16 @@ export async function generateMetadata({ params }: NotePageProps): Promise<Metad
   const note = site.notes.find((n) => n.slug === slug);
   if (!note) return {};
 
-  const firstBody = Array.isArray(note.body) ? note.body[0] : note.body;
-  const description = (note.excerpt ?? firstBody).replace(/<[^>]+>/g, "").slice(0, 200);
+  const firstBody = note.bodyHtml
+    ? note.bodyHtml
+    : Array.isArray(note.body)
+      ? note.body[0]
+      : note.body;
+  const description = (note.excerpt ?? firstBody ?? "")
+    .replace(/<[^>]+>/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 200);
 
   return {
     title: `${note.title} — Juan Figuera`,
@@ -40,7 +48,13 @@ export default async function NotePage({ params }: NotePageProps) {
   const note = site.notes.find((n) => n.slug === slug);
   if (!note) notFound();
 
-  const paragraphs = Array.isArray(note.body) ? note.body : [note.body];
+  const paragraphs = note.bodyHtml
+    ? []
+    : Array.isArray(note.body)
+      ? note.body
+      : note.body
+        ? [note.body]
+        : [];
 
   return (
     <div className="wrap">
@@ -69,9 +83,16 @@ export default async function NotePage({ params }: NotePageProps) {
           </div>
         )}
 
-        {paragraphs.map((p, i) => (
-          <p key={i} dangerouslySetInnerHTML={{ __html: highlight(p) }} />
-        ))}
+        {note.bodyHtml ? (
+          <div
+            className="note-page-rich"
+            dangerouslySetInnerHTML={{ __html: note.bodyHtml }}
+          />
+        ) : (
+          paragraphs.map((p, i) => (
+            <p key={i} dangerouslySetInnerHTML={{ __html: highlight(p) }} />
+          ))
+        )}
 
         {note.links && note.links.length > 0 && (
           <div className="note-links">
