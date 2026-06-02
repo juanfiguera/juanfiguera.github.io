@@ -177,6 +177,17 @@ export const site: Site = {
       tags: ["Open Source", "AI Agents"],
     },
     {
+      label: "Open source",
+      live: true,
+      title: "Sello",
+      sub: "Verifiable receipts for agent actions",
+      url: "https://sello.build",
+      urlLabel: "sello.build",
+      date: "2026 →",
+      desc: "An open protocol where the services an agent calls sign encrypted receipts for what they observed, then publish them to an append-only transparency log. The owner verifies later with their own key, so a compromised agent can't rewrite its own trail. Built on COSE signatures, HPKE encryption, and SCITT-style logs. The mental model: Find My, but for AI agents.",
+      tags: ["Open Source", "AI Agents"],
+    },
+    {
       label: "PSA",
       live: true,
       title: "Ship Responsibly",
