@@ -456,17 +456,25 @@ i {
   align-items: baseline;
   flex-wrap: wrap;
 }
-.project-body h3 a {
+.project-body h3 a,
+.project-body .tags .project-url {
   color: inherit;
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition:
+    color 0.2s ease,
+    text-decoration-color 0.2s ease;
+}
+.project-body h3 a:hover,
+.project-body .tags .project-url:hover {
+  color: var(--shu);
+  text-decoration-color: var(--shu);
 }
 .project-body h3 .arrow {
   font-size: 0.45em;
   color: var(--ink-mute);
-}
-.project-body .tags .project-url {
-  color: inherit;
-  text-decoration: none;
 }
 .project-body .sub {
   font-family: var(--font-plex), system-ui, sans-serif;
