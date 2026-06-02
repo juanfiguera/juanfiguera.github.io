@@ -22,15 +22,18 @@ export function Notes() {
           <article key={n.slug ?? n.date + n.title} className="note">
             <div className="date">{formatNoteDate(n.date)}</div>
             <div>
-              <h4>{n.title}</h4>
+              <h4>
+                {isPreview ? (
+                  <Link href={`/notes/${n.slug}/`} className="note-title-link">
+                    {n.title}
+                  </Link>
+                ) : (
+                  n.title
+                )}
+              </h4>
               {paragraphs.map((p, i) => (
                 <p key={i} dangerouslySetInnerHTML={{ __html: highlight(p) }} />
               ))}
-              {isPreview && (
-                <Link href={`/notes/${n.slug}/`} className="note-more">
-                  Read more →
-                </Link>
-              )}
             </div>
           </article>
         );

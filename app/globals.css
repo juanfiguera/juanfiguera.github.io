@@ -553,6 +553,20 @@ i {
   margin-bottom: 12px;
   max-width: 28ch;
 }
+.note-title-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition:
+    color 0.2s ease,
+    text-decoration-color 0.2s ease;
+}
+.note-title-link:hover {
+  color: var(--shu);
+  text-decoration-color: var(--shu);
+}
 .note p {
   font-weight: 400;
   font-size: 16px;
@@ -579,23 +593,6 @@ i {
 }
 .note p a:hover {
   text-decoration-color: var(--shu);
-}
-.note-more {
-  display: inline-block;
-  margin-top: 4px;
-  font-family: var(--font-mono), monospace;
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  text-decoration: none;
-  transition:
-    color 0.2s ease,
-    transform 0.3s ease;
-}
-.note-more:hover {
-  color: var(--ink);
-  transform: translateX(2px);
 }
 
 /* ——— Note detail page ——— */
