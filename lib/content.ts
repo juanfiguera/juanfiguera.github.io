@@ -84,7 +84,7 @@ export const site: Site = {
   xLabel: "@juanbfiguera",
 
   about: [
-    "Electrical engineer by training, product leader by trade, repeat founder by habit.",
+    "Electrical engineer by training, product builder by craft, founder by instinct.",
     "The question I keep coming back to lately: how an agent gets authority to act on someone's behalf, and how that authority stays scoped, logged, and revocable. Most agent demos end with an API key and hope. That's the gap APOA is trying to close, as an open-source layer on top of MCP.",
   ],
 
