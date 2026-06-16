@@ -190,6 +190,17 @@ export const site: Site = {
     {
       label: "Open source",
       live: true,
+      title: "sshsign",
+      sub: "SSH signing service for AI agents",
+      url: "https://sshsign.dev",
+      urlLabel: "sshsign.dev",
+      date: "2026 →",
+      desc: "An SSH signing service that lets an agent sign within constraints you set: git commits, SAFE agreements, NDAs, or any payload piped to stdin. Every action lands in an immutable audit trail, and high-stakes signatures require a human co-sign with a handwritten signature in the browser. Each signature is cryptographically verifiable and sealed in a tamper-evident evidence envelope. MIT-licensed, part of the APOA family.",
+      tags: ["Open Source", "AI Agents"],
+    },
+    {
+      label: "Open source",
+      live: true,
       title: "wwxd",
       sub: "What would X do?",
       url: "https://wwxd.chat",
