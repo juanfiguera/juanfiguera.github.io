@@ -188,6 +188,17 @@ export const site: Site = {
       tags: ["Open Source", "AI Agents"],
     },
     {
+      label: "Open source",
+      live: true,
+      title: "wwxd",
+      sub: "What would X do?",
+      url: "https://wwxd.chat",
+      urlLabel: "wwxd.chat",
+      date: "2026 →",
+      desc: "Chat with an AI impression of anyone (founders, presidents, philosophers, comedians), then drop a few into a room and let them argue it out. Give it sources (tweets, essays, YouTube transcripts) and replies cite back to specific posts; without sources the model goes from what it knows. MIT-licensed and self-hosted, works with Anthropic, OpenAI, or Ollama. Every voice is an AI rendition, never the real person.",
+      tags: ["Open Source", "AI Agents"],
+    },
+    {
       label: "Manual",
       live: true,
       title: "Ship Responsibly",
@@ -501,12 +512,6 @@ tx_047: order placed        ($19.70 charged)</code></pre>
       slug: "what-apoa-adds-to-mcp",
       title: "What APOA adds to MCP",
       body: "The piece I keep adding to MCP is capability attenuation: every time an agent delegates to another agent, the new permissions can only be narrower than the parent's. Never wider. The protocol enforces it at signing, and cascade revocation means pulling one token breaks the chain below it. Around that: OAuth for APIs, browser-based credential injection for the long tail that doesn't have one, natural-language soft rules logged next to hard rules the protocol refuses outright, per-action audit. None of it is novel alone. The question is whether it's the right default for agents acting on behalf of people.",
-    },
-    {
-      date: "2026-04-22",
-      slug: "claude-design-is-fire",
-      title: "Claude Design is 🔥🔥🔥",
-      body: "Always liked UI/UX design, and love working in Figma. Tried Claude Design recently and was so impressed with the quality of the output: multiple design directions, high-definition mockups. Makes me wonder how design will evolve over the next 12 months.",
     },
   ],
 };
