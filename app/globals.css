@@ -182,13 +182,6 @@ i {
   gap: 8px;
   align-items: flex-end;
 }
-.sec-head .tick .num {
-  font-family: var(--font-mono), monospace;
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  color: var(--ink-mute);
-  font-weight: 400;
-}
 .sec-head .tick .mark {
   width: 1px;
   height: 24px;

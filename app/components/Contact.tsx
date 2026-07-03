@@ -4,7 +4,7 @@ import { SectionHead } from "./SectionHead";
 export function Contact() {
   return (
     <section id="contact" className="sec">
-      <SectionHead numeral="V">
+      <SectionHead>
         Say <em>hi</em>
       </SectionHead>
       <p className="contact-line">
