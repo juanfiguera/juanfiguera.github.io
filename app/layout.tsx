@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { AgentConsole } from "@/app/components/AgentConsole";
 import "./globals.css";
 
 const plex = IBM_Plex_Sans({
@@ -22,6 +23,7 @@ const description =
   "Juan Figuera is Director of Product Management at American Express Digital Labs. Building APOA, an open-source authorization framework for AI agents on top of MCP.";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.juanfiguera.com"),
   title,
   description,
   authors: [{ name: "Juan Figuera" }],
@@ -44,7 +46,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${plex.variable} ${mono.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <AgentConsole />
+      </body>
       <GoogleAnalytics gaId="G-BMMF2HFNJW" />
     </html>
   );
