@@ -7,7 +7,7 @@ export function Notes() {
 
   return (
     <section id="notes" className="sec">
-      <SectionHead numeral="II">Notes</SectionHead>
+      <SectionHead>Notes</SectionHead>
       {notes.map((n) => {
         const isPreview = Boolean(n.excerpt && n.slug);
         const paragraphs = isPreview

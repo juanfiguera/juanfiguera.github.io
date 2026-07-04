@@ -4,7 +4,7 @@ import { SectionHead } from "./SectionHead";
 export function Projects() {
   return (
     <section id="projects" className="sec">
-      <SectionHead numeral="III">Projects</SectionHead>
+      <SectionHead>Projects</SectionHead>
       {site.projects.map((p, i) => (
         <article key={i} className="project">
           <div className={`label${p.live ? " live" : ""}`}>{p.label}</div>

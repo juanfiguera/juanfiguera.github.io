@@ -55,7 +55,7 @@ function RoleFull({ role }: { role: Role }) {
 export function Experience() {
   return (
     <section id="experience" className="sec">
-      <SectionHead numeral="IV">
+      <SectionHead>
         <em>Experience</em>
       </SectionHead>
       {site.experience.map((role, i) =>

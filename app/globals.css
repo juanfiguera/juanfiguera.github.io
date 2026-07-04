@@ -173,40 +173,6 @@ i {
   border-bottom: 1px solid var(--line);
   position: relative;
 }
-.sec-head .tick {
-  position: absolute;
-  left: -40px;
-  top: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: flex-end;
-}
-.sec-head .tick .num {
-  font-family: var(--font-mono), monospace;
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  color: var(--ink-mute);
-  font-weight: 400;
-}
-.sec-head .tick .mark {
-  width: 1px;
-  height: 24px;
-  background: var(--ink);
-}
-@media (max-width: 700px) {
-  .sec-head .tick {
-    position: static;
-    flex-direction: row;
-    margin-bottom: 8px;
-    align-items: center;
-  }
-  .sec-head .tick .mark {
-    width: 18px;
-    height: 1px;
-    align-self: center;
-  }
-}
 .sec-head h2 {
   font-family: var(--font-plex), system-ui, sans-serif;
   font-weight: 400;
@@ -1006,8 +972,5 @@ i {
   }
   .sec {
     padding: clamp(32px, 5vh, 56px) 0;
-  }
-  .sec-head .tick {
-    display: none;
   }
 }

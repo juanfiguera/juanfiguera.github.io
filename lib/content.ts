@@ -518,12 +518,6 @@ tx_047: order placed        ($19.70 charged)</code></pre>
         },
       ],
     },
-    {
-      date: "2026-04-15",
-      slug: "what-apoa-adds-to-mcp",
-      title: "What APOA adds to MCP",
-      body: "The piece I keep adding to MCP is capability attenuation: every time an agent delegates to another agent, the new permissions can only be narrower than the parent's. Never wider. The protocol enforces it at signing, and cascade revocation means pulling one token breaks the chain below it. Around that: OAuth for APIs, browser-based credential injection for the long tail that doesn't have one, natural-language soft rules logged next to hard rules the protocol refuses outright, per-action audit. None of it is novel alone. The question is whether it's the right default for agents acting on behalf of people.",
-    },
   ],
 };
 
