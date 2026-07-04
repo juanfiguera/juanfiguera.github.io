@@ -19,14 +19,14 @@ export type ProjectCategory =
   | "AI Governance"
   | "Thinking Tools"
   | "Writing"
-  | "Play";
+  | "Gaming";
 
 /** Pill order for the project filter (rendered after an implicit "All"). */
 export const projectCategories: ProjectCategory[] = [
   "AI Governance",
   "Thinking Tools",
   "Writing",
-  "Play",
+  "Gaming",
 ];
 
 export type Project = {
@@ -238,10 +238,10 @@ export const site: Site = {
       urlLabel: "shipresponsibly.com",
       date: "2026 →",
       desc: "A pre-flight manual for shipping AI-assisted software. A five-level severity model (from a weekend toy to a hospital intake form), a 25-point pre-flight checklist, thirty responsible prompt templates, and seven postmortems from recent incidents. Five minutes, five questions, every deploy. Written for first-time builders and senior engineers reviewing their agent's hundredth PR alike.",
-      tags: ["Manual", "AI Coding"],
+      tags: ["Manual", "Agentic Engineering"],
     },
     {
-      category: "Play",
+      category: "Gaming",
       label: "Weekend build",
       live: true,
       title: "Silicon Fighter",
@@ -250,7 +250,7 @@ export const site: Site = {
       urlLabel: "siliconfighter.com",
       date: "2025",
       desc: "A fun take on the iconic Street Fighter game I grew up with, starring tech CEOs instead of Ryu and Ken. Built over Thanksgiving weekend with Claude Code, Cursor, and Nano Banana Pro.",
-      tags: ["Pixel art", "Gaming"],
+      tags: ["Pixel art"],
     },
   ],
 
