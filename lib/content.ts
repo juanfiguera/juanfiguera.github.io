@@ -189,7 +189,7 @@ export const site: Site = {
       url: "https://agenticpoa.com",
       urlLabel: "agenticpoa.com",
       date: "2026 →",
-      desc: "Open-source authorization for AI agents, modeled on power of attorney. The model never sees the credentials. TypeScript and Python SDKs shipped.",
+      desc: "Open-source authorization for AI agents, modeled on power of attorney. Scopes, attenuating delegation, and revocation, with MCP and A2A integrations.",
       tags: ["Open Source", "AI Agents"],
     },
     {
