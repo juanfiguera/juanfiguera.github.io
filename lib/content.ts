@@ -189,7 +189,7 @@ export const site: Site = {
       url: "https://agenticpoa.com",
       urlLabel: "agenticpoa.com",
       date: "2026 →",
-      desc: "Open-source authorization for AI agents, modeled on power of attorney. Works for services with APIs (OAuth under the hood) and services without (browser-based credential injection where the AI never sees the credentials). TypeScript and Python SDKs shipped, plus MCP and A2A packages.",
+      desc: "Open-source authorization for AI agents, modeled on power of attorney. The model never sees the credentials. TypeScript and Python SDKs shipped.",
       tags: ["Open Source", "AI Agents"],
     },
     {
@@ -201,7 +201,7 @@ export const site: Site = {
       url: "https://sello.build",
       urlLabel: "sello.build",
       date: "2026 →",
-      desc: "An open protocol where the services an agent calls sign encrypted receipts for what they observed, then publish them to an append-only transparency log. The owner verifies later with their own key, so a compromised agent can't rewrite its own trail. Built on COSE signatures, HPKE encryption, and SCITT-style logs. The mental model: Find My, but for AI agents.",
+      desc: "An open protocol where the services an agent calls sign tamper-proof receipts you verify with your own key. Find My, but for AI agents.",
       tags: ["Open Source", "AI Agents"],
     },
     {
@@ -213,7 +213,7 @@ export const site: Site = {
       url: "https://sshsign.dev",
       urlLabel: "sshsign.dev",
       date: "2026 →",
-      desc: "An SSH signing service that lets an agent sign within constraints you set: git commits, SAFE agreements, NDAs, or any payload piped to stdin. Every action lands in an immutable audit trail, and high-stakes signatures require a human co-sign with a handwritten signature in the browser. Each signature is cryptographically verifiable and sealed in a tamper-evident evidence envelope. MIT-licensed, part of the APOA family.",
+      desc: "An SSH signing service that lets an agent sign within limits you set. High-stakes signatures need a human co-sign. Part of the APOA family.",
       tags: ["Open Source", "AI Agents"],
     },
     {
@@ -225,7 +225,7 @@ export const site: Site = {
       url: "https://wwxd.chat",
       urlLabel: "wwxd.chat",
       date: "2026 →",
-      desc: "Chat with an AI impression of anyone (founders, presidents, philosophers, comedians), then drop a few into a room and let them argue it out. Give it sources (tweets, essays, YouTube transcripts) and replies cite back to specific posts; without sources the model goes from what it knows. MIT-licensed and self-hosted, works with Anthropic, OpenAI, or Ollama. Every voice is an AI rendition, never the real person.",
+      desc: "Chat with an AI impression of anyone, then drop a few in a room and let them argue. Every voice is an AI rendition, never the real person.",
       tags: ["Open Source", "AI Agents"],
     },
     {
@@ -237,7 +237,7 @@ export const site: Site = {
       url: "https://shipresponsibly.com",
       urlLabel: "shipresponsibly.com",
       date: "2026 →",
-      desc: "A pre-flight manual for shipping AI-assisted software. A five-level severity model (from a weekend toy to a hospital intake form), a 25-point pre-flight checklist, thirty responsible prompt templates, and seven postmortems from recent incidents. Five minutes, five questions, every deploy. Written for first-time builders and senior engineers reviewing their agent's hundredth PR alike.",
+      desc: "A pre-flight manual for AI-assisted software: a severity model, a 25-point checklist, prompt templates, and seven postmortems. Five minutes, every deploy.",
       tags: ["Manual", "Agentic Engineering"],
     },
     {
@@ -249,7 +249,7 @@ export const site: Site = {
       url: "https://siliconfighter.com",
       urlLabel: "siliconfighter.com",
       date: "2025",
-      desc: "A fun take on the iconic Street Fighter game I grew up with, starring tech CEOs instead of Ryu and Ken. Built over Thanksgiving weekend with Claude Code, Cursor, and Nano Banana Pro.",
+      desc: "A take on the Street Fighter game I grew up with, starring tech CEOs instead of Ryu and Ken. Built over a Thanksgiving weekend with Claude Code, Cursor, and Nano Banana Pro.",
       tags: ["Pixel art"],
     },
   ],
