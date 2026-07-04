@@ -424,31 +424,10 @@ i {
 }
 @media (min-width: 700px) {
   .project {
-    grid-template-columns: 72px 1fr auto;
+    grid-template-columns: 72px 1fr;
     gap: 32px;
     align-items: start;
   }
-}
-.project .label {
-  font-family: var(--font-mono), monospace;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  padding-top: 10px;
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.project .label.live::before {
-  content: "";
-  width: 5px;
-  height: 5px;
-  background: var(--shu);
-  display: inline-block;
-  border-radius: 0;
-  flex-shrink: 0;
 }
 .project-body h3 {
   font-family: var(--font-plex), system-ui, sans-serif;
@@ -519,17 +498,11 @@ i {
   font-family: var(--font-mono), monospace;
   font-size: 11px;
   letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--ink-mute);
-  padding-top: 14px;
-  text-align: right;
+  padding-top: 10px;
   white-space: nowrap;
   font-weight: 400;
-}
-@media (max-width: 699px) {
-  .project-date {
-    text-align: left;
-    padding-top: 0;
-  }
 }
 
 /* ——— Notes ——— */

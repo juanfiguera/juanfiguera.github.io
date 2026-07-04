@@ -226,7 +226,7 @@ export const site: Site = {
       urlLabel: "wwxd.chat",
       date: "2026 →",
       desc: "Chat with an AI impression of anyone, then drop a few in a room and let them argue. Every voice is an AI rendition, never the real person.",
-      tags: ["Open Source", "AI Agents"],
+      tags: ["Open Source", "AI Personas"],
     },
     {
       category: "Writing",
@@ -238,7 +238,7 @@ export const site: Site = {
       urlLabel: "shipresponsibly.com",
       date: "2026 →",
       desc: "A pre-flight manual for AI-assisted software: a severity model, a 25-point checklist, prompt templates, and seven postmortems. Five minutes, every deploy.",
-      tags: ["Manual", "Agentic Engineering"],
+      tags: ["PDF", "Agentic Engineering"],
     },
     {
       category: "Gaming",

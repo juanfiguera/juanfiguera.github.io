@@ -53,7 +53,7 @@ export function Projects() {
 
       {visible.map((p) => (
         <article key={p.title} className="project">
-          <div className={`label${p.live ? " live" : ""}`}>{p.label}</div>
+          <div className="project-date">{p.date}</div>
           <div className="project-body">
             <h3>
               <a href={p.url} target="_blank" rel="noopener noreferrer">
@@ -76,7 +76,6 @@ export function Projects() {
               </a>
             </div>
           </div>
-          <div className="project-date">{p.date}</div>
         </article>
       ))}
     </section>
