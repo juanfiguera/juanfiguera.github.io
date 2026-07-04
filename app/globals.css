@@ -367,6 +367,47 @@ i {
 }
 
 /* ——— Projects ——— */
+.project-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: clamp(28px, 4.5vh, 44px);
+}
+.project-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--ink-mute);
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 12px 20px;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+.project-filter .count {
+  font-size: 11px;
+  color: var(--line);
+}
+.project-filter:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.project-filter.active {
+  color: var(--paper);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.project-filter.active .count {
+  color: rgba(255, 255, 255, 0.5);
+}
 .project {
   display: grid;
   grid-template-columns: 1fr;

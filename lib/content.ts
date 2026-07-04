@@ -15,7 +15,22 @@ export type Role = {
   compact?: boolean;
 };
 
+export type ProjectCategory =
+  | "AI Governance"
+  | "Thinking Tools"
+  | "Writing"
+  | "Play";
+
+/** Pill order for the project filter (rendered after an implicit "All"). */
+export const projectCategories: ProjectCategory[] = [
+  "AI Governance",
+  "Thinking Tools",
+  "Writing",
+  "Play",
+];
+
 export type Project = {
+  category: ProjectCategory;
   label: string;
   live?: boolean;
   title: string;
@@ -166,6 +181,7 @@ export const site: Site = {
 
   projects: [
     {
+      category: "AI Governance",
       label: "Open source",
       live: true,
       title: "APOA",
@@ -177,6 +193,7 @@ export const site: Site = {
       tags: ["Open Source", "AI Agents"],
     },
     {
+      category: "AI Governance",
       label: "Open source",
       live: true,
       title: "Sello",
@@ -188,6 +205,7 @@ export const site: Site = {
       tags: ["Open Source", "AI Agents"],
     },
     {
+      category: "AI Governance",
       label: "Open source",
       live: true,
       title: "sshsign",
@@ -199,6 +217,7 @@ export const site: Site = {
       tags: ["Open Source", "AI Agents"],
     },
     {
+      category: "Thinking Tools",
       label: "Open source",
       live: true,
       title: "wwxd",
@@ -210,6 +229,7 @@ export const site: Site = {
       tags: ["Open Source", "AI Agents"],
     },
     {
+      category: "Writing",
       label: "Manual",
       live: true,
       title: "Ship Responsibly",
@@ -221,6 +241,7 @@ export const site: Site = {
       tags: ["Manual", "AI Coding"],
     },
     {
+      category: "Play",
       label: "Weekend build",
       live: true,
       title: "Silicon Fighter",
