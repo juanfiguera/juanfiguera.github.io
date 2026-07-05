@@ -225,7 +225,7 @@ export const site: Site = {
       url: "https://wwxd.chat",
       urlLabel: "wwxd.chat",
       date: "2026 →",
-      desc: "Chat with an AI impression of anyone, then drop a few in a room and let them argue. Every voice is an AI rendition, never the real person.",
+      desc: "Open-source app for chatting with AI impressions of public figures, then convening several in a room to debate a question and react to each other.",
       tags: ["Open Source", "AI Personas"],
     },
     {
