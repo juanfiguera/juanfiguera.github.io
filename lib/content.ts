@@ -69,6 +69,18 @@ export function formatNoteDate(iso: string): string {
   return monthYearFormatter.format(new Date(`${iso}T00:00:00Z`));
 }
 
+export type Publication = {
+  title: string;
+  authors: string;
+  venue: string;
+  year: string;
+  /** e.g. "arXiv:2606.04193 [cs.CR]" */
+  identifier: string;
+  url: string;
+  urlLabel: string;
+  desc: string;
+};
+
 export type Site = {
   name: string;
   location: string;
@@ -83,6 +95,7 @@ export type Site = {
   about: string[];
   experience: Role[];
   projects: Project[];
+  publications: Publication[];
   notes: Note[];
 };
 
@@ -225,7 +238,7 @@ export const site: Site = {
       url: "https://wwxd.chat",
       urlLabel: "wwxd.chat",
       date: "2026 →",
-      desc: "Open-source app for chatting with AI impressions of public figures, then convening several in a room to debate a question and react to each other.",
+      desc: "Open-source app for chatting with AI impressions of anyone. Put a few in a room together and watch them riff off each other.",
       tags: ["Open Source", "AI Personas"],
     },
     {
@@ -237,7 +250,7 @@ export const site: Site = {
       url: "https://shipresponsibly.com",
       urlLabel: "shipresponsibly.com",
       date: "2026 →",
-      desc: "A pre-flight manual for AI-assisted software: a severity model, a 25-point checklist, prompt templates, and seven postmortems. Five minutes, every deploy.",
+      desc: "A pre-flight manual for AI-assisted software: a severity model, a 25-point checklist, prompt templates, and seven postmortems.",
       tags: ["PDF", "Agentic Engineering"],
     },
     {
@@ -251,6 +264,20 @@ export const site: Site = {
       date: "2025",
       desc: "A take on the Street Fighter game I grew up with, starring tech CEOs instead of Ryu and Ken. Built over a Thanksgiving weekend with Claude Code, Cursor, and Nano Banana Pro.",
       tags: ["Pixel art"],
+    },
+  ],
+
+  publications: [
+    {
+      title:
+        "Notarized Agents: Receiver-Attested Confidential Receipts for AI Agent Actions",
+      authors: "Juan Figuera",
+      venue: "arXiv",
+      year: "2026",
+      identifier: "arXiv:2606.04193 [cs.CR]",
+      url: "https://arxiv.org/abs/2606.04193",
+      urlLabel: "arxiv.org/abs/2606.04193",
+      desc: "A protocol for tamper-evident receipts of AI agent actions: the service an agent calls signs proof of what it observed and publishes it to a public transparency log, so the owner can reconstruct the trail without trusting the agent or its operator.",
     },
   ],
 

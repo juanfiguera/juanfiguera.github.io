@@ -1,11 +1,11 @@
 import { About } from "./components/About";
 import { Contact } from "./components/Contact";
-import { Experience } from "./components/Experience";
 import { Footer } from "./components/Footer";
 import { Hero } from "./components/Hero";
 import { Nav } from "./components/Nav";
 import { Notes } from "./components/Notes";
 import { Projects } from "./components/Projects";
+import { Publications } from "./components/Publications";
 import { Reveal } from "./components/Reveal";
 
 export default function Page() {
@@ -34,7 +34,7 @@ export default function Page() {
         </Reveal>
 
         <Reveal>
-          <Experience />
+          <Publications />
         </Reveal>
 
         <Reveal>

@@ -2,7 +2,8 @@ const items = [
   { href: "#about", label: "About" },
   { href: "#notes", label: "Notes" },
   { href: "#projects", label: "Projects" },
-  { href: "#experience", label: "Experience" },
+  { href: "#publications", label: "Publications" },
+  { href: "/experience/", label: "Experience" },
   { href: "#contact", label: "Say hi" },
 ];
 
