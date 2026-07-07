@@ -583,6 +583,98 @@ i {
   text-decoration-color: var(--shu);
 }
 
+/* ——— Publications ——— */
+.pub {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  padding: clamp(28px, 4.5vh, 48px) 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.pub:last-child {
+  border-bottom: none;
+}
+@media (min-width: 700px) {
+  .pub {
+    grid-template-columns: 72px 1fr;
+    gap: 32px;
+  }
+}
+.pub-meta {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  padding-top: 6px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.pub h3 {
+  font-family: var(--font-plex), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: clamp(18px, 1.9vw, 22px);
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 8px;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.pub h3 a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition:
+    color 0.2s ease,
+    text-decoration-color 0.2s ease;
+}
+.pub h3 a:hover {
+  color: var(--shu);
+  text-decoration-color: var(--shu);
+}
+.pub h3 .arrow {
+  font-size: 0.5em;
+  color: var(--ink-mute);
+}
+.pub-cite {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--ink-mute);
+  margin-bottom: 14px;
+}
+.pub p {
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 60ch;
+  letter-spacing: 0.003em;
+  margin-bottom: 16px;
+}
+.pub-url {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition:
+    color 0.2s ease,
+    text-decoration-color 0.2s ease;
+}
+.pub-url:hover {
+  color: var(--shu);
+  text-decoration-color: var(--shu);
+}
+
 /* ——— Note detail page ——— */
 .note-page {
   padding: clamp(40px, 6vh, 72px) 0 clamp(48px, 8vh, 96px);

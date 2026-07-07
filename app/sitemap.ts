@@ -22,6 +22,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 1,
     },
+    {
+      url: `${SITE_URL}/experience/`,
+      lastModified: latest,
+      changeFrequency: "yearly",
+      priority: 0.6,
+    },
     ...notes.map((n) => ({
       // trailingSlash: true in next.config.ts, so note routes end with "/".
       url: `${SITE_URL}/notes/${n.slug}/`,

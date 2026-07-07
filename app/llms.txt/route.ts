@@ -39,6 +39,15 @@ function buildLlmsTxt(): string {
   });
   lines.push("");
 
+  lines.push("## Publications");
+  lines.push("");
+  site.publications.forEach((pub) => {
+    lines.push(
+      `- [${pub.title}](${pub.url}) — ${pub.authors}, ${pub.venue} ${pub.year} (${pub.identifier}): ${stripHtml(pub.desc)}`,
+    );
+  });
+  lines.push("");
+
   lines.push("## Notes");
   lines.push("");
   site.notes
@@ -47,6 +56,18 @@ function buildLlmsTxt(): string {
       const url = `${SITE_URL}/notes/${n.slug}/`;
       lines.push(`- [${n.title}](${url}) (${n.date}): ${noteSummary(n)}`);
     });
+  lines.push("");
+
+  lines.push("## Experience");
+  lines.push("");
+  lines.push(`Full history: ${SITE_URL}/experience/`);
+  lines.push("");
+  site.experience.forEach((role) => {
+    const suffix = role.titleSuffix ? `, ${role.titleSuffix.toLowerCase()}` : "";
+    lines.push(
+      `- ${role.company} — ${role.title}${suffix} (${role.dateRange})`,
+    );
+  });
   lines.push("");
 
   lines.push("## Connect");
