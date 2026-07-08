@@ -122,7 +122,7 @@ i {
   line-height: 1.2;
   letter-spacing: -0.022em;
   color: var(--ink);
-  max-width: 18ch;
+  max-width: 100%;
   margin-bottom: 56px;
 }
 .hero h1 .b {
