@@ -193,7 +193,7 @@ i {
   line-height: 1.6;
   letter-spacing: 0.003em;
   color: var(--ink-soft);
-  max-width: 58ch;
+  max-width: 72ch;
   margin-bottom: 20px;
 }
 .about p:last-child {
@@ -286,7 +286,7 @@ i {
   font-size: 17px;
   line-height: 1.6;
   color: var(--ink-soft);
-  max-width: 58ch;
+  max-width: 72ch;
   letter-spacing: 0.003em;
   margin-bottom: 24px;
 }
@@ -323,7 +323,7 @@ i {
   font-size: 16px;
   line-height: 1.6;
   color: var(--ink-soft);
-  max-width: 58ch;
+  max-width: 72ch;
   font-weight: 400;
   letter-spacing: 0.003em;
 }
@@ -475,7 +475,7 @@ i {
   font-size: 17px;
   line-height: 1.6;
   color: var(--ink-soft);
-  max-width: 60ch;
+  max-width: 72ch;
   letter-spacing: 0.003em;
   margin-bottom: 16px;
 }
@@ -560,7 +560,7 @@ i {
   font-size: 16px;
   line-height: 1.6;
   color: var(--ink-soft);
-  max-width: 58ch;
+  max-width: 72ch;
   letter-spacing: 0.003em;
   margin-bottom: 16px;
 }
@@ -653,7 +653,7 @@ i {
   font-size: 17px;
   line-height: 1.6;
   color: var(--ink-soft);
-  max-width: 60ch;
+  max-width: 72ch;
   letter-spacing: 0.003em;
   margin-bottom: 16px;
 }
@@ -718,7 +718,7 @@ i {
   font-size: 17px;
   line-height: 1.65;
   color: var(--ink-soft);
-  max-width: 62ch;
+  max-width: 72ch;
   letter-spacing: 0.003em;
   margin-bottom: 18px;
 }
@@ -754,7 +754,7 @@ i {
   margin: 0 0 18px;
   padding: 4px 0 4px 20px;
   border-left: 2px solid var(--line);
-  max-width: 62ch;
+  max-width: 72ch;
 }
 .note-page blockquote p {
   color: var(--ink-mute);
@@ -773,7 +773,7 @@ i {
   overflow-x: auto;
   color: var(--ink-soft);
   letter-spacing: 0;
-  max-width: 62ch;
+  max-width: 72ch;
 }
 .note-page pre code {
   font-family: inherit;
@@ -797,7 +797,7 @@ i {
   border: 0;
   border-top: 1px solid var(--line);
   margin: 36px 0;
-  max-width: 62ch;
+  max-width: 72ch;
 }
 .note-page strong {
   font-weight: 600;
