@@ -15,6 +15,13 @@ export type Role = {
   compact?: boolean;
 };
 
+export type Education = {
+  date: string;
+  degree: string;
+  school: string;
+  location: string;
+};
+
 export type ProjectCategory =
   | "AI Governance"
   | "Thinking Tools"
@@ -94,6 +101,7 @@ export type Site = {
   xLabel: string;
   about: string[];
   experience: Role[];
+  education: Education[];
   projects: Project[];
   publications: Publication[];
   notes: Note[];
@@ -189,6 +197,21 @@ export const site: Site = {
       context:
         "Coordinated transition of 5 RF semiconductor products from experimental stage to mass production, resulting in a $4M order for an advanced semiconductor developer.",
       compact: true,
+    },
+  ],
+
+  education: [
+    {
+      date: "May 2011",
+      degree: "M.S. Engineering Management",
+      school: "Northeastern University",
+      location: "Boston, MA",
+    },
+    {
+      date: "May 2008",
+      degree: "B.S. Electrical Engineering",
+      school: "University of Massachusetts Lowell",
+      location: "Lowell, MA",
     },
   ],
 

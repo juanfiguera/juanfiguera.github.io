@@ -1,13 +1,14 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Experience } from "@/app/components/Experience";
+import { EducationSection } from "@/app/components/EducationSection";
 import { Footer } from "@/app/components/Footer";
 import { Reveal } from "@/app/components/Reveal";
 
 export const metadata: Metadata = {
   title: "Experience — Juan Figuera",
   description:
-    "Juan Figuera's professional experience: Director of Product Management at American Express Digital Labs, co-founder and CTO of HarvestYield (acquired), and earlier roles at Daily Burn, Deutsche Bank, and Tyco Electronics.",
+    "Juan Figuera's professional experience and education: Director of Product Management at American Express Digital Labs, co-founder and CTO of HarvestYield (acquired), earlier roles at Daily Burn, Deutsche Bank, and Tyco Electronics, plus degrees from Northeastern University and UMass Lowell.",
   alternates: { canonical: "/experience/" },
 };
 
@@ -25,6 +26,10 @@ export default function ExperiencePage() {
 
       <Reveal>
         <Experience />
+      </Reveal>
+
+      <Reveal>
+        <EducationSection />
       </Reveal>
 
       <Footer />

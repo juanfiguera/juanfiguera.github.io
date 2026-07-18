@@ -70,6 +70,13 @@ function buildLlmsTxt(): string {
   });
   lines.push("");
 
+  lines.push("## Education");
+  lines.push("");
+  site.education.forEach((edu) => {
+    lines.push(`- ${edu.degree}, ${edu.school}, ${edu.location} (${edu.date})`);
+  });
+  lines.push("");
+
   lines.push("## Connect");
   lines.push("");
   lines.push(`- [GitHub](${site.github})`);
