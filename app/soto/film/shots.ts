@@ -8,6 +8,14 @@ export const BLUE = "#1d4fb8";
 
 export type Fonts = { sans: string; mono: string };
 
+// Canvas text cannot use CSS variables, so read the families next/font generated.
+export function readFonts(): Fonts {
+  const style = getComputedStyle(document.documentElement);
+  const sans = style.getPropertyValue("--font-plex").trim();
+  const mono = style.getPropertyValue("--font-mono").trim();
+  return { sans: sans || "system-ui, sans-serif", mono: mono || "ui-monospace, monospace" };
+}
+
 export type FilmPointer = { x: number; y: number; active: boolean; moved: boolean };
 
 export type ShotFrame = {

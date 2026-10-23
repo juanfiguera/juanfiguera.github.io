@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { drawCaption } from "./film/captions";
-import { createScore, type Score } from "./film/score";
+import { createPlayer, type Player, type PlayerState } from "./film/player";
+import { FILM_ARRANGEMENT, createScore, type Score } from "./film/score";
 import {
   INK,
   PAPER,
@@ -10,93 +11,17 @@ import {
   createShots,
   drawStrings,
   noteFor,
+  readFonts,
   vignette,
   type FilmPointer,
-  type Fonts,
   type Pluck,
   type VibratingString,
 } from "./film/shots";
 import { BEAT_SECONDS, SHOTS, TOTAL_BEATS, TOTAL_SECONDS, shotAt } from "./film/timeline";
 import { useCanvasLoop, type Frame } from "./useCanvasLoop";
 
-type PlayerState = "idle" | "playing" | "paused" | "ended";
-
-type PlayerListener = {
-  onShot: (index: number) => void;
-  onState: (state: PlayerState) => void;
-  onProgress: (seconds: number) => void;
-};
-
 // Drops land on these beats; a single soft flash marks each one.
 const DROPS = [32, 64];
-
-// Playback lives outside React so the canvas loop can advance it every frame without re-rendering.
-function createPlayer(score: Score) {
-  let time = 0;
-  let state: PlayerState = "idle";
-  let listener: PlayerListener | null = null;
-
-  const setState = (next: PlayerState) => {
-    state = next;
-    listener?.onState(next);
-  };
-
-  return {
-    listen(next: PlayerListener | null) {
-      listener = next;
-    },
-    get time() {
-      return time;
-    },
-    get state() {
-      return state;
-    },
-    shotChanged(index: number) {
-      listener?.onShot(index);
-    },
-    play() {
-      if (time >= TOTAL_SECONDS) time = 0;
-      score.sync(time);
-      setState("playing");
-    },
-    pause() {
-      score.silence();
-      setState("paused");
-    },
-    seek(seconds: number) {
-      time = Math.min(TOTAL_SECONDS - 0.01, Math.max(0, seconds));
-      listener?.onProgress(time);
-      if (state === "playing") score.sync(time);
-      else if (state === "ended") setState("paused");
-    },
-    // Called after sound is switched on or off mid-play so the audio clock takes over or lets go.
-    resync() {
-      if (state === "playing") score.sync(time);
-    },
-    advance(dt: number) {
-      if (state !== "playing") return;
-      const audioTime = score.clipTime();
-      // The audio clock starts a hair behind after a sync; never let the picture step backwards.
-      time = audioTime === null ? time + dt : Math.max(time, audioTime);
-      if (time >= TOTAL_SECONDS) {
-        time = TOTAL_SECONDS;
-        setState("ended");
-      } else {
-        score.schedule(time);
-      }
-      listener?.onProgress(time);
-    },
-  };
-}
-
-type Player = ReturnType<typeof createPlayer>;
-
-function readFonts(): Fonts {
-  const style = getComputedStyle(document.documentElement);
-  const sans = style.getPropertyValue("--font-plex").trim();
-  const mono = style.getPropertyValue("--font-mono").trim();
-  return { sans: sans || "system-ui, sans-serif", mono: mono || "ui-monospace, monospace" };
-}
 
 function createOutro(pluck: Pluck) {
   let strings: VibratingString[] = [];
@@ -209,8 +134,8 @@ export function SotoFilm() {
   const stageRef = useRef<HTMLDivElement | null>(null);
   const fillRef = useRef<HTMLDivElement | null>(null);
   const clockRef = useRef<HTMLSpanElement | null>(null);
-  const [score] = useState(createScore);
-  const [player] = useState(() => createPlayer(score));
+  const [score] = useState(() => createScore(FILM_ARRANGEMENT));
+  const [player] = useState(() => createPlayer(score, TOTAL_SECONDS));
   const [createScene] = useState(() => createFilmScene(player, score));
   const [state, setState] = useState<PlayerState>("idle");
   const [shotIndex, setShotIndex] = useState(0);

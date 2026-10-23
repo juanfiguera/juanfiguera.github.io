@@ -1590,3 +1590,33 @@ i {
     gap: 10px;
   }
 }
+.soto-inside-start {
+  justify-content: flex-end;
+  padding-bottom: clamp(20px, 6%, 48px);
+}
+.soto-inside-play {
+  padding: 0;
+  background: transparent;
+}
+.soto-credits {
+  margin-top: 18px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-mute);
+}
+.soto-credits summary {
+  cursor: pointer;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.soto-credits ul {
+  padding-left: 18px;
+  margin: 10px 0;
+}
+.soto-piece .soto-credits p {
+  font-size: 13px;
+  margin: 10px 0;
+}

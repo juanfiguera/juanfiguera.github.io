@@ -1,8 +1,6 @@
 import { BEAT_SECONDS, TOTAL_BEATS } from "./timeline";
 
 const STEPS_PER_BEAT = 4;
-const STEP_SECONDS = BEAT_SECONDS / STEPS_PER_BEAT;
-const TOTAL_STEPS = TOTAL_BEATS * STEPS_PER_BEAT;
 const LOOKAHEAD_SECONDS = 0.2;
 // Gives the first scheduled notes a moment so they are not clipped by the audio thread.
 const START_DELAY = 0.06;
@@ -56,16 +54,16 @@ const SECTIONS: Section[] = [
 
 const sectionAt = (beat: number) => SECTIONS.find((section) => beat >= section.from && beat < section.to);
 
-type Bus = { input: GainNode; reverbSend: GainNode };
+export type Bus = { input: GainNode; reverbSend: GainNode };
 
-type Audio = {
+export type Audio = {
   context: AudioContext;
   master: DynamicsCompressorNode;
   reverb: ConvolverNode;
   noise: AudioBuffer;
 };
 
-function createNoise(context: AudioContext): AudioBuffer {
+export function createNoise(context: AudioContext): AudioBuffer {
   const buffer = context.createBuffer(1, context.sampleRate, context.sampleRate);
   const data = buffer.getChannelData(0);
   for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
@@ -73,7 +71,7 @@ function createNoise(context: AudioContext): AudioBuffer {
 }
 
 // A decaying noise burst is a cheap, convincing room without shipping an impulse file.
-function createRoom(context: AudioContext, seconds: number): AudioBuffer {
+export function createRoom(context: AudioContext, seconds: number): AudioBuffer {
   const length = Math.floor(context.sampleRate * seconds);
   const buffer = context.createBuffer(2, length, context.sampleRate);
   for (let channel = 0; channel < 2; channel++) {
@@ -83,7 +81,7 @@ function createRoom(context: AudioContext, seconds: number): AudioBuffer {
   return buffer;
 }
 
-function envelope(gain: AudioParam, at: number, peak: number, attack: number, release: number) {
+export function envelope(gain: AudioParam, at: number, peak: number, attack: number, release: number) {
   gain.setValueAtTime(0.0001, at);
   gain.exponentialRampToValueAtTime(peak, at + attack);
   gain.exponentialRampToValueAtTime(0.0001, at + attack + release);
@@ -133,7 +131,7 @@ function bass({ context }: Audio, bus: Bus, at: number, frequency: number) {
   oscillator.stop(at + 0.32);
 }
 
-function rod({ context }: Audio, bus: Bus, at: number, frequency: number, level: number) {
+export function rod({ context }: Audio, bus: Bus, at: number, frequency: number, level: number) {
   for (const partial of ROD_PARTIALS) {
     const oscillator = context.createOscillator();
     const gain = context.createGain();
@@ -190,7 +188,7 @@ function riser(audio: Audio, bus: Bus, at: number, seconds: number) {
   source.stop(at + seconds + 0.1);
 }
 
-function playStep(audio: Audio, bus: Bus, step: number, at: number) {
+function playFilmStep(audio: Audio, bus: Bus, step: number, at: number) {
   const beat = step / STEPS_PER_BEAT;
   const section = sectionAt(beat);
   const chord = PROGRESSION[Math.floor(beat / 4) % PROGRESSION.length];
@@ -217,15 +215,30 @@ function playStep(audio: Audio, bus: Bus, step: number, at: number) {
   }
 }
 
-function fadeBus(bus: Bus, now: number) {
+export function fadeBus(bus: Bus, now: number) {
   bus.input.gain.setTargetAtTime(0.0001, now, 0.03);
   bus.reverbSend.gain.setTargetAtTime(0.0001, now, 0.03);
 }
 
+// What a score plays: a step grid plus a voice for the viewer's own plucks.
+export type Arrangement = {
+  stepSeconds: number;
+  totalSteps: number;
+  playStep: (audio: Audio, bus: Bus, step: number, at: number) => void;
+  pluck: (audio: Audio, bus: Bus, at: number, frequency: number, strength: number) => void;
+};
+
+export const FILM_ARRANGEMENT: Arrangement = {
+  stepSeconds: BEAT_SECONDS / STEPS_PER_BEAT,
+  totalSteps: TOTAL_BEATS * STEPS_PER_BEAT,
+  playStep: playFilmStep,
+  pluck: (audio, bus, at, frequency, strength) => rod(audio, bus, at, frequency, 0.12 + strength * 0.3),
+};
+
 export type Score = ReturnType<typeof createScore>;
 
 // The score owns the clock while sound is on: picture follows audio time, so beats land exactly on cuts.
-export function createScore() {
+export function createScore({ stepSeconds, totalSteps, playStep, pluck }: Arrangement) {
   let audio: Audio | null = null;
   let bus: Bus | null = null;
   let enabled = false;
@@ -281,7 +294,7 @@ export function createScore() {
     // Re-anchors the score to a clip time after play, seek or unmute.
     sync(clipTime: number) {
       const current = ready();
-      nextStep = Math.ceil(clipTime / STEP_SECONDS - 1e-6);
+      nextStep = Math.ceil(clipTime / stepSeconds - 1e-6);
       if (!current) return;
       freshBus(current);
       clipZero = current.context.currentTime + START_DELAY - clipTime;
@@ -301,8 +314,8 @@ export function createScore() {
     schedule(clipTime: number) {
       const current = ready();
       if (!current || !bus) return;
-      while (nextStep < TOTAL_STEPS && nextStep * STEP_SECONDS < clipTime + LOOKAHEAD_SECONDS) {
-        const at = Math.max(current.context.currentTime, clipZero + nextStep * STEP_SECONDS);
+      while (nextStep < totalSteps && nextStep * stepSeconds < clipTime + LOOKAHEAD_SECONDS) {
+        const at = Math.max(current.context.currentTime, clipZero + nextStep * stepSeconds);
         playStep(current, bus, nextStep, at);
         nextStep++;
       }
@@ -313,7 +326,7 @@ export function createScore() {
       if (!current) return;
       if (!bus) freshBus(current);
       if (!bus) return;
-      rod(current, bus, current.context.currentTime + 0.005, frequency, 0.12 + strength * 0.3);
+      pluck(current, bus, current.context.currentTime + 0.005, frequency, strength);
     },
   };
 }
