@@ -6,6 +6,9 @@ export function Footer() {
   return (
     <Reveal as="footer" className="foot">
       <span>© Juan Figuera · {year}</span>
+      <a href="/soto/" className="foot-link">
+        Homenaje a Soto
+      </a>
     </Reveal>
   );
 }
