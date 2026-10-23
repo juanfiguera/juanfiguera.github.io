@@ -1426,3 +1426,167 @@ i {
     min-height: 460px;
   }
 }
+/* The film breaks out of the text column so it reads as a screen, not an illustration. */
+.soto-film {
+  width: min(1180px, calc(100vw - 32px));
+  margin: 0 0 28px 50%;
+  translate: -50% 0;
+}
+.soto-film-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #0c0b0a;
+  overflow: hidden;
+}
+.soto-film-stage:fullscreen {
+  aspect-ratio: auto;
+  width: 100vw;
+  height: 100vh;
+}
+.soto-film-stage canvas {
+  position: absolute;
+  inset: 0;
+  touch-action: pan-y;
+}
+.soto-film-start {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  /* Lets the pointer reach the rings behind, so the poster frame is already playable. */
+  pointer-events: none;
+}
+.soto-film-start button {
+  pointer-events: auto;
+}
+.soto-film-play {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  background: #0c0b0a;
+  color: #f3f1ec;
+  border: 0;
+  padding: clamp(18px, 3vw, 30px) clamp(22px, 4vw, 44px);
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.2s ease;
+}
+.soto-film-play:hover {
+  transform: scale(1.03);
+}
+.soto-film-play-title {
+  font-weight: 300;
+  font-size: clamp(24px, 4.2vw, 48px);
+  letter-spacing: -0.025em;
+}
+.soto-film-play-meta,
+.soto-film-quiet,
+.soto-film-chip,
+.soto-film-clock {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.soto-film-play-meta {
+  color: #0c0b0a;
+  background: #f2c12e;
+  padding: 8px 14px;
+}
+.soto-film-quiet {
+  color: #0c0b0a;
+  background: #f3f1ec;
+  border: 0;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.soto-film-hud,
+.soto-film-end {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+}
+.soto-film-end {
+  top: 50%;
+  right: auto;
+  left: 50%;
+  translate: -50% -50%;
+}
+.soto-film-chip {
+  color: #f3f1ec;
+  background: rgba(12, 11, 10, 0.7);
+  border: 1px solid rgba(243, 241, 236, 0.35);
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.soto-film-chip:hover,
+.soto-film-chip[aria-pressed="true"] {
+  color: #0c0b0a;
+  background: #f2c12e;
+  border-color: #f2c12e;
+}
+.soto-film-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.soto-film-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 14px;
+}
+.soto-film-track {
+  position: relative;
+  flex: 1;
+  display: flex;
+  gap: 3px;
+  height: 24px;
+}
+.soto-film-segment {
+  flex-basis: 0;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  background: linear-gradient(var(--line-soft), var(--line-soft)) center / 100% 4px no-repeat;
+}
+.soto-film-segment:hover,
+.soto-film-segment.is-current {
+  background-image: linear-gradient(var(--ink-mute), var(--ink-mute));
+}
+.soto-film-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 4px;
+  margin-top: -2px;
+  background: var(--shu);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+.soto-film-clock {
+  color: var(--ink-mute);
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 560px) {
+  /* Taller frame on phones: most people will watch it held upright. */
+  .soto-film-stage {
+    aspect-ratio: 4 / 5;
+  }
+  .soto-film-controls {
+    gap: 10px;
+  }
+}

@@ -6,7 +6,7 @@ import { Esfera } from "./Esfera";
 import { Espiral } from "./Espiral";
 import { Penetrable } from "./Penetrable";
 import { Sonoro } from "./Sonoro";
-import { SotoClip } from "./SotoClip";
+import { SotoFilm } from "./SotoFilm";
 import { Vibracion } from "./Vibracion";
 
 export const metadata: Metadata = {
@@ -60,17 +60,18 @@ export default function SotoPage() {
           </p>
         </Reveal>
 
-        <Reveal className="sec soto-piece">
+        <section className="sec soto-piece" id="film">
           <div className="soto-label">
             <span className="soto-num">00</span>
-            <h2>A life in lines</h2>
+            <h2>Soto, in 60 seconds</h2>
           </div>
-          <SotoClip />
+          <SotoFilm />
           <p>
-            Seventy seconds, ten chapters, and the same 150 lines the whole way through, from the
-            Orinoco to Paris to a sphere of rods on a Caracas highway.
+            A minute of his life with a score written for it in code, every cut on the beat. Turn
+            the sound up. You can pluck the first thread, steer the moiré, and walk through the
+            Penetrable while it plays. At the end it hands you the threads.
           </p>
-        </Reveal>
+        </section>
 
         <Reveal className="sec soto-piece">
           <div className="soto-label">
