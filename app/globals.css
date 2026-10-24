@@ -1080,3 +1080,770 @@ i {
     padding: clamp(32px, 5vh, 56px) 0;
   }
 }
+
+/* ——— Soto tribute ——— */
+.soto-wrap-top {
+  padding-bottom: 0;
+}
+.soto-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+}
+.soto-hero {
+  position: relative;
+  height: min(86vh, 920px);
+  min-height: 520px;
+  background: var(--paper);
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+  overflow: hidden;
+}
+.soto-hero-text {
+  position: absolute;
+  left: clamp(20px, 6vw, 80px);
+  bottom: clamp(24px, 6vh, 64px);
+  /* Let the pointer pass through the type and keep moving the threads. */
+  pointer-events: none;
+}
+.soto-hero-text h1 {
+  font-family: var(--font-plex), system-ui, sans-serif;
+  font-weight: 300;
+  font-size: clamp(36px, 7vw, 88px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 6px 12px 10px;
+  margin-left: -12px;
+  display: inline-block;
+}
+.soto-kicker,
+.soto-hint,
+.soto-num {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.soto-kicker,
+.soto-hint {
+  background: var(--paper);
+  display: inline-block;
+  padding: 4px 8px;
+  margin-left: -8px;
+}
+.soto-kicker {
+  display: block;
+  width: fit-content;
+  margin-bottom: 10px;
+}
+.soto-hint {
+  display: block;
+  width: fit-content;
+  margin-top: 14px;
+}
+.soto-intro p,
+.soto-piece p {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  max-width: 64ch;
+  margin-bottom: 20px;
+}
+.soto-intro p:first-child {
+  font-weight: 300;
+  font-size: clamp(20px, 2.2vw, 26px);
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+.soto-intro em {
+  color: var(--shu);
+}
+.soto-intro a,
+.soto-piece p a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease;
+}
+.soto-intro a:hover,
+.soto-piece p a:hover {
+  text-decoration-color: var(--shu);
+}
+.soto-piece {
+  border-top: 1px solid var(--line);
+}
+.soto-label {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+.soto-label h2 {
+  font-family: var(--font-plex), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(22px, 2.6vw, 30px);
+  letter-spacing: -0.022em;
+  color: var(--ink);
+}
+.soto-panel {
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--line-soft);
+  background: var(--paper);
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+.soto-panel {
+  position: relative;
+}
+.soto-canvas--grab {
+  cursor: grab;
+}
+.soto-canvas--grab:active {
+  cursor: grabbing;
+}
+.soto-clip {
+  margin-bottom: 28px;
+}
+.soto-clip-screen {
+  position: relative;
+}
+.soto-clip-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--line-soft);
+  background: #f3f1ec;
+  overflow: hidden;
+}
+/* Pinned so the canvas can never push the 16:9 box taller when it resizes itself. */
+.soto-clip-stage canvas {
+  position: absolute;
+  inset: 0;
+}
+.soto-clip-caption {
+  position: absolute;
+  left: clamp(14px, 3vw, 28px);
+  bottom: clamp(12px, 3vw, 24px);
+  max-width: min(46ch, 80%);
+  pointer-events: none;
+  animation: soto-clip-in 0.8s ease both;
+}
+.soto-clip-caption .soto-clip-year {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--shu);
+  margin-bottom: 4px;
+}
+.soto-clip-caption .soto-clip-title {
+  font-weight: 400;
+  font-size: clamp(18px, 2.4vw, 26px);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+.soto-clip-caption .soto-clip-body {
+  font-size: clamp(13px, 1.5vw, 15px);
+  line-height: 1.45;
+  color: var(--ink-soft);
+  margin-bottom: 0;
+}
+.soto-piece .soto-clip-caption p {
+  background: rgba(243, 241, 236, 0.86);
+  width: fit-content;
+  max-width: none;
+  padding: 1px 6px;
+  margin: 0 0 4px -6px;
+}
+@keyframes soto-clip-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.soto-clip-start {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(243, 241, 236, 0.55);
+  border: 0;
+  cursor: pointer;
+  color: var(--ink);
+  font-family: inherit;
+  transition: background-color 0.2s ease;
+}
+.soto-clip-start:hover {
+  background: rgba(243, 241, 236, 0.3);
+}
+.soto-clip-start-title {
+  font-weight: 300;
+  font-size: clamp(24px, 4vw, 44px);
+  letter-spacing: -0.025em;
+}
+.soto-clip-start-meta {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--ink);
+  padding: 8px 14px;
+}
+.soto-clip-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 14px;
+}
+.soto-clip-toggle {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 8px 14px;
+  min-width: 82px;
+  cursor: pointer;
+}
+.soto-clip-toggle:hover {
+  border-color: var(--ink);
+}
+.soto-clip-track {
+  position: relative;
+  flex: 1;
+  height: 24px;
+}
+.soto-clip-track::before,
+.soto-clip-fill {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  margin-top: -1px;
+  background: var(--line-soft);
+}
+.soto-clip-fill {
+  background: var(--shu);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.soto-clip-tick {
+  position: absolute;
+  top: 0;
+  width: 18px;
+  height: 24px;
+  margin-left: -9px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+.soto-clip-tick::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid var(--ink-mute);
+  transition: transform 0.2s ease;
+}
+.soto-clip-tick:hover::after,
+.soto-clip-tick.is-current::after {
+  transform: scale(1.4);
+  border-color: var(--shu);
+  background: var(--shu);
+}
+.soto-sound {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 8px 14px;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+.soto-sound:hover {
+  border-color: var(--ink);
+}
+.soto-sound[aria-pressed="true"] {
+  color: var(--paper);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.foot-link {
+  color: var(--ink-mute);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.foot-link:hover {
+  color: var(--shu);
+}
+@media (max-width: 560px) {
+  /* The stage is too short on phones to hold the caption, so it moves below the picture. */
+  .soto-clip-caption {
+    position: static;
+    max-width: none;
+    margin-top: 12px;
+    min-height: 7.5em;
+  }
+  .soto-piece .soto-clip-caption p {
+    background: none;
+  }
+  .soto-hero {
+    height: 78vh;
+    min-height: 460px;
+  }
+}
+/* The film breaks out of the text column so it reads as a screen, not an illustration. */
+.soto-film {
+  width: min(1180px, calc(100vw - 32px));
+  margin: 0 0 28px 50%;
+  translate: -50% 0;
+}
+.soto-film-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #0c0b0a;
+  overflow: hidden;
+}
+.soto-film-stage:fullscreen {
+  aspect-ratio: auto;
+  width: 100vw;
+  height: 100vh;
+}
+.soto-film-stage canvas {
+  position: absolute;
+  inset: 0;
+  touch-action: pan-y;
+}
+.soto-film-start {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  /* Lets the pointer reach the rings behind, so the poster frame is already playable. */
+  pointer-events: none;
+}
+.soto-film-start button {
+  pointer-events: auto;
+}
+.soto-film-play {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  background: #0c0b0a;
+  color: #f3f1ec;
+  border: 0;
+  padding: clamp(18px, 3vw, 30px) clamp(22px, 4vw, 44px);
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.2s ease;
+}
+.soto-film-play:hover {
+  transform: scale(1.03);
+}
+.soto-film-play-title {
+  font-weight: 300;
+  font-size: clamp(24px, 4.2vw, 48px);
+  letter-spacing: -0.025em;
+}
+.soto-film-play-meta,
+.soto-film-quiet,
+.soto-film-chip,
+.soto-film-clock {
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.soto-film-play-meta {
+  color: #0c0b0a;
+  background: #f2c12e;
+  padding: 8px 14px;
+}
+.soto-film-quiet {
+  color: #0c0b0a;
+  background: #f3f1ec;
+  border: 0;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.soto-film-hud,
+.soto-film-end {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+}
+.soto-film-end {
+  top: 50%;
+  right: auto;
+  left: 50%;
+  translate: -50% -50%;
+}
+.soto-film-chip {
+  color: #f3f1ec;
+  background: rgba(12, 11, 10, 0.7);
+  border: 1px solid rgba(243, 241, 236, 0.35);
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.soto-film-chip:hover,
+.soto-film-chip[aria-pressed="true"] {
+  color: #0c0b0a;
+  background: #f2c12e;
+  border-color: #f2c12e;
+}
+.soto-film-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.soto-film-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 14px;
+}
+.soto-film-track {
+  position: relative;
+  flex: 1;
+  display: flex;
+  gap: 3px;
+  height: 24px;
+}
+.soto-film-segment {
+  flex-basis: 0;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  background: linear-gradient(var(--line-soft), var(--line-soft)) center / 100% 4px no-repeat;
+}
+.soto-film-segment:hover,
+.soto-film-segment.is-current {
+  background-image: linear-gradient(var(--ink-mute), var(--ink-mute));
+}
+.soto-film-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 4px;
+  margin-top: -2px;
+  background: var(--shu);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+.soto-film-clock {
+  color: var(--ink-mute);
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 560px) {
+  /* Taller frame on phones: most people will watch it held upright. */
+  .soto-film-stage {
+    aspect-ratio: 4 / 5;
+  }
+  .soto-film-controls {
+    gap: 10px;
+  }
+}
+/* Top of the frame: the poster's title fills the bottom, so the buttons sit in the clear band above it. */
+.soto-inside-start {
+  justify-content: flex-start;
+  padding-top: clamp(56px, 14%, 120px);
+}
+@media (max-width: 560px) {
+  .soto-inside-start {
+    justify-content: center;
+    padding-top: 0;
+  }
+}
+/* The film's player: one bar inside the frame, in the poster's face, out of the way until the pointer moves. */
+.soto-inside-stage {
+  --player-ink: #f4f1ea;
+  font-family: var(--font-tight), sans-serif;
+}
+.soto-inside-stage.is-chrome-asleep {
+  cursor: none;
+}
+.soto-inside-play,
+.soto-inside-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 999px;
+  font: 500 15px/1 var(--font-tight), sans-serif;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.soto-inside-play {
+  padding: 12px 20px 12px 16px;
+  color: #0b0a09;
+  background: var(--player-ink);
+}
+.soto-inside-play:hover {
+  transform: scale(1.04);
+}
+.soto-inside-play svg,
+.soto-inside-pill svg {
+  width: 18px;
+  height: 18px;
+}
+.soto-inside-play-time {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.55;
+}
+.soto-inside-end {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  display: flex;
+  gap: 10px;
+}
+.soto-inside-pill {
+  padding: 11px 18px 11px 14px;
+  color: var(--player-ink);
+  background: rgba(244, 241, 234, 0.14);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.soto-inside-pill:hover {
+  background: rgba(244, 241, 234, 0.26);
+}
+.soto-player {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 48px clamp(10px, 2vw, 20px) clamp(4px, 1vw, 10px);
+  color: var(--player-ink);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.28) 55%, transparent);
+  transition: opacity 0.35s ease, translate 0.35s ease;
+}
+.soto-player[hidden] {
+  display: none;
+}
+.is-chrome-asleep .soto-player {
+  opacity: 0;
+  translate: 0 8px;
+  pointer-events: none;
+}
+.soto-player-track {
+  position: relative;
+  display: flex;
+  gap: 2px;
+  height: 16px;
+  margin: 0 6px;
+}
+.soto-player-segment {
+  position: relative;
+  flex-basis: 0;
+  min-width: 2px;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  background: linear-gradient(rgba(244, 241, 234, 0.3), rgba(244, 241, 234, 0.3)) center / 100% 3px no-repeat;
+  transition: background-size 0.15s ease;
+}
+.soto-player-track:hover .soto-player-segment {
+  background-size: 100% 5px;
+}
+.soto-player-segment:hover {
+  background-image: linear-gradient(rgba(244, 241, 234, 0.55), rgba(244, 241, 234, 0.55));
+}
+/* Chapter name above the scrubber, like a streaming player's preview label. */
+.soto-player-segment::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  translate: -50% 4px;
+  padding: 5px 9px;
+  border-radius: 6px;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 500;
+  color: #0b0a09;
+  background: var(--player-ink);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, translate 0.15s ease;
+}
+.soto-player-segment:hover::after {
+  opacity: 1;
+  translate: -50% 0;
+}
+.soto-player-segment:first-child::after {
+  left: 0;
+  translate: 0 4px;
+}
+.soto-player-segment:first-child:hover::after {
+  translate: 0 0;
+}
+.soto-player-segment:last-child::after {
+  left: auto;
+  right: 0;
+  translate: 0 4px;
+}
+.soto-player-segment:last-child:hover::after {
+  translate: 0 0;
+}
+.soto-player-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 3px;
+  margin-top: -1.5px;
+  background: var(--player-ink);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+  transition: height 0.15s ease, margin-top 0.15s ease;
+}
+.soto-player-track:hover .soto-player-fill {
+  height: 5px;
+  margin-top: -2.5px;
+}
+.soto-player-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-top: 4px;
+}
+.soto-player-button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.88;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+.soto-player-button:hover {
+  opacity: 1;
+  background: rgba(244, 241, 234, 0.14);
+}
+.soto-player-button:focus-visible,
+.soto-inside-play:focus-visible,
+.soto-inside-pill:focus-visible,
+.soto-player-segment:focus-visible {
+  outline: 2px solid var(--player-ink);
+  outline-offset: 2px;
+}
+.soto-player-button svg {
+  width: 22px;
+  height: 22px;
+}
+.soto-player-button[aria-pressed="false"] {
+  opacity: 0.55;
+}
+/* A small dot under a switched-on toggle, the way players mark loop. */
+.soto-player-button[aria-pressed="true"]::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.soto-player-clock {
+  margin-left: 6px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  opacity: 0.9;
+}
+/* Confirms a copied link without a modal, sitting just above the share button. */
+.soto-player-toast {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  right: 0;
+  padding: 5px 9px;
+  border-radius: 6px;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 500;
+  color: #0b0a09;
+  background: var(--player-ink);
+  pointer-events: none;
+}
+.soto-player-spacer {
+  flex: 1;
+}
+.soto-credits {
+  margin-top: 18px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-mute);
+}
+.soto-credits summary {
+  cursor: pointer;
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.soto-credits ul {
+  padding-left: 18px;
+  margin: 10px 0;
+}
+.soto-piece .soto-credits p {
+  font-size: 14px;
+  margin: 10px 0;
+}
