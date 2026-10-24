@@ -35,7 +35,8 @@ function buildLlmsTxt(): string {
   lines.push("## Projects");
   lines.push("");
   site.projects.forEach((p) => {
-    lines.push(`- [${p.title} — ${p.sub}](${p.url}): ${stripHtml(p.desc)}`);
+    const url = p.url.startsWith("/") ? `${SITE_URL}${p.url}` : p.url;
+    lines.push(`- [${p.title} — ${p.sub}](${url}): ${stripHtml(p.desc)}`);
   });
   lines.push("");
 

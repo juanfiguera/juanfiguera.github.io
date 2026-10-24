@@ -35,7 +35,11 @@ export function Projects() {
     <section id="projects" className="sec">
       <SectionHead>Projects</SectionHead>
 
-      <div className="project-filters" role="tablist" aria-label="Filter projects by category">
+      <div
+        className="project-filters"
+        role="tablist"
+        aria-label="Filter projects by category"
+      >
         {pills.map((pill) => (
           <button
             key={pill}
@@ -51,33 +55,36 @@ export function Projects() {
         ))}
       </div>
 
-      {visible.map((p) => (
-        <article key={p.title} className="project">
-          <div className="project-date">{p.date}</div>
-          <div className="project-body">
-            <h3>
-              <a href={p.url} target="_blank" rel="noopener noreferrer">
-                {p.title} <span className="arrow">↗</span>
-              </a>
-            </h3>
-            <div className="sub">{p.sub}</div>
-            <p dangerouslySetInnerHTML={{ __html: highlight(p.desc) }} />
-            <div className="tags">
-              {p.tags.map((t) => (
-                <span key={t}>{t}</span>
-              ))}
-              <a
-                className="project-url"
-                href={p.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {p.urlLabel}
-              </a>
+      {visible.map((p) => {
+        // Pages on this site open in place; everything else is someone else's site and gets a new tab.
+        const internal = p.url.startsWith("/");
+        const linkProps = internal
+          ? {}
+          : { target: "_blank", rel: "noopener noreferrer" };
+        return (
+          <article key={p.title} className="project">
+            <div className="project-date">{p.date}</div>
+            <div className="project-body">
+              <h3>
+                <a href={p.url} {...linkProps}>
+                  {p.title}{" "}
+                  <span className="arrow">{internal ? "→" : "↗"}</span>
+                </a>
+              </h3>
+              <div className="sub">{p.sub}</div>
+              <p dangerouslySetInnerHTML={{ __html: highlight(p.desc) }} />
+              <div className="tags">
+                {p.tags.map((t) => (
+                  <span key={t}>{t}</span>
+                ))}
+                <a className="project-url" href={p.url} {...linkProps}>
+                  {p.urlLabel}
+                </a>
+              </div>
             </div>
-          </div>
-        </article>
-      ))}
+          </article>
+        );
+      })}
     </section>
   );
 }

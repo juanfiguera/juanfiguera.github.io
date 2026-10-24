@@ -26,7 +26,8 @@ export type ProjectCategory =
   | "AI Governance"
   | "Thinking Tools"
   | "Writing"
-  | "Gaming";
+  | "Gaming"
+  | "Art";
 
 /** Pill order for the project filter (rendered after an implicit "All"). */
 export const projectCategories: ProjectCategory[] = [
@@ -34,6 +35,7 @@ export const projectCategories: ProjectCategory[] = [
   "Thinking Tools",
   "Writing",
   "Gaming",
+  "Art",
 ];
 
 export type Project = {
@@ -275,6 +277,18 @@ export const site: Site = {
       date: "2026 →",
       desc: "A pre-flight manual for AI-assisted software: a severity model, a 25-point checklist, prompt templates, and seven postmortems.",
       tags: ["PDF", "Agentic Engineering"],
+    },
+    {
+      category: "Art",
+      label: "Tribute",
+      live: true,
+      title: "Homenaje a Soto",
+      sub: "An interactive tribute to Jesús Rafael Soto",
+      url: "/soto/",
+      urlLabel: "juanfiguera.com/soto",
+      date: "2026",
+      desc: "My dad took my brother and me to the Soto museum in Ciudad Bolívar when we were kids. This is my thank-you: walk through a Penetrable, play a wall of sounding rods, and watch a two-minute film scored live in your browser.",
+      tags: ["Canvas", "Web Audio"],
     },
     {
       category: "Gaming",
