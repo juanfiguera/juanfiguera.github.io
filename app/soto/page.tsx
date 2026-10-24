@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Inter_Tight } from "next/font/google";
 import { Footer } from "@/app/components/Footer";
 import { Reveal } from "@/app/components/Reveal";
 import { Esfera } from "./Esfera";
@@ -8,6 +9,9 @@ import { Penetrable } from "./Penetrable";
 import { Sonoro } from "./Sonoro";
 import { SotoInside } from "./SotoInside";
 import { Vibracion } from "./Vibracion";
+
+// A tight grotesque for the film only: big, close-set titles in the manner of an indie film poster.
+const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-tight" });
 
 export const metadata: Metadata = {
   title: "Homenaje a Soto · Juan Figuera",
@@ -44,7 +48,7 @@ export default function SotoPage() {
           <p>
             When I was a kid, my dad took my brother and me to the{" "}
             <a href="https://jesus-soto.com/es/museo-soto/">Museo de Arte Moderno Jesús Soto</a> in{" "}
-            <em>Ciudad Bolívar</em>, Soto&apos;s hometown, and showed us his work. I&apos;ve loved it
+            <em>Ciudad Bolívar, Venezuela</em>, Soto&apos;s hometown, and showed us his work. I&apos;ve loved it
             ever since. Part of it is that it&apos;s genuinely cool. Part of it is that every Soto I see
             takes me back to that day with my family.
           </p>
@@ -60,16 +64,16 @@ export default function SotoPage() {
           </p>
         </Reveal>
 
-        <section className="sec soto-piece" id="film">
+        <section className={`sec soto-piece ${interTight.variable}`} id="film">
           <div className="soto-label">
             <span className="soto-num">00</span>
             <h2>Inside the vibration</h2>
           </div>
           <SotoInside />
           <p>
-            A minute and a half of Soto&apos;s work and his own words, set to a slow house track that
-            your browser plays live. Leave it on loop on a big screen. Move across it and the slats
-            shift in front of the photos, the way his work moves when you walk past it.
+            Two minutes of Soto&apos;s work, in photographs and footage, with his own words,
+            set to a chill house track that your browser plays live. Turn the sound up, go
+            fullscreen, or leave it on loop on a big screen.
           </p>
         </section>
 

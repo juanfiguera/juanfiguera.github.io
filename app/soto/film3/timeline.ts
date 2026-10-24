@@ -1,26 +1,24 @@
 import type { Move } from "./look";
 
-export const BPM = 116;
+// Lounge house tempo; the cuts and the score both count in these bars.
+export const BPM = 120;
 export const BAR_SECONDS = (60 / BPM) * 4;
-export const TOTAL_BARS = 48;
-export const TOTAL_SECONDS = TOTAL_BARS * BAR_SECONDS;
 
 export type PhotoId =
   | "penetrable-looking-up"
-  | "pearl-rain-pampatar"
-  | "ucv-pre-penetrable-1957"
   | "museo-soto-facade"
   | "museo-soto-yellow-work"
   | "penetrable-amarillo-2"
   | "esfera-japon"
-  | "penetrable-amarillo-1"
-  | "casm-esfera-caracas"
-  | "esfera-caracas-1"
-  | "esfera-caracas-night";
+  | "esfera-caracas-night"
+  | "soto-inauguration-1973"
+  | "soto-wolleh"
+  | "soto-2002";
 
 export type Photo = { id: PhotoId; work: string; place: string; author: string; license: string; page: string };
 
-// Every photo is openly licensed on Wikimedia Commons and shows a work permanently installed in Venezuela.
+// Every photo is openly licensed on Wikimedia Commons. The works shown are permanently installed in Venezuela;
+// the rest are photographs of Soto himself.
 export const PHOTOS: Record<PhotoId, Photo> = {
   "penetrable-looking-up": {
     id: "penetrable-looking-up",
@@ -29,22 +27,6 @@ export const PHOTOS: Record<PhotoId, Photo> = {
     author: "Gabriel S. Delgado C.",
     license: "CC BY 2.0",
     page: "https://commons.wikimedia.org/wiki/File:Penetrable_(2866896338).jpg",
-  },
-  "pearl-rain-pampatar": {
-    id: "pearl-rain-pampatar",
-    work: "La Perla del Caribe",
-    place: "Pampatar, Isla de Margarita",
-    author: "Javier D. Volcán R.",
-    license: "CC BY 2.0",
-    page: "https://commons.wikimedia.org/wiki/File:Pearl_Rain.jpg",
-  },
-  "ucv-pre-penetrable-1957": {
-    id: "ucv-pre-penetrable-1957",
-    work: "Untitled, 1957",
-    place: "Ciudad Universitaria, Caracas",
-    author: "GermanX",
-    license: "CC BY-SA 4.0",
-    page: "https://commons.wikimedia.org/wiki/File:UCV_2015-236_Escultura_de_Jes%C3%BAs_Soto,_1957.jpg",
   },
   "museo-soto-facade": {
     id: "museo-soto-facade",
@@ -78,30 +60,6 @@ export const PHOTOS: Record<PhotoId, Photo> = {
     license: "CC BY-SA 3.0",
     page: "https://commons.wikimedia.org/wiki/File:%22Esfera_Jap%C3%B3n%22_del_artista_venezolano_Jes%C3%BAs_Soto.JPG",
   },
-  "penetrable-amarillo-1": {
-    id: "penetrable-amarillo-1",
-    work: "Penetrable amarillo",
-    place: "Museo Soto, Ciudad Bolívar",
-    author: "Guillermo Ramos Flamerich",
-    license: "CC BY 2.5",
-    page: "https://commons.wikimedia.org/wiki/File:Soto_Museum_3.jpg",
-  },
-  "casm-esfera-caracas": {
-    id: "casm-esfera-caracas",
-    work: "Virtual sphere",
-    place: "Centro de Acción Social por la Música, Caracas",
-    author: "Guillermo Ramos Flamerich",
-    license: "CC BY-SA 3.0",
-    page: "https://commons.wikimedia.org/wiki/File:CASM_1.jpg",
-  },
-  "esfera-caracas-1": {
-    id: "esfera-caracas-1",
-    work: "Esfera Caracas, 1992",
-    place: "Autopista Francisco Fajardo, Caracas",
-    author: "AlejandraLopez23",
-    license: "CC BY 3.0",
-    page: "https://commons.wikimedia.org/wiki/File:Esfera_Caracas_%22Jesus_Soto%22.jpg",
-  },
   "esfera-caracas-night": {
     id: "esfera-caracas-night",
     work: "Esfera Caracas, 1992",
@@ -109,6 +67,30 @@ export const PHOTOS: Record<PhotoId, Photo> = {
     author: "Eduardo.wiki.ve",
     license: "CC BY-SA 4.0",
     page: "https://commons.wikimedia.org/wiki/File:Caracas_20150125_372.jpg",
+  },
+  "soto-inauguration-1973": {
+    id: "soto-inauguration-1973",
+    work: "Soto opens his museum",
+    place: "Ciudad Bolívar, August 1973",
+    author: "Oficina Central de Información de Venezuela",
+    license: "CC BY-SA 4.0",
+    page: "https://commons.wikimedia.org/wiki/File:1973._Agosto_25._Inauguraci%C3%B3n_Museo_de_Arte_Moderno_Jes%C3%BAs_Soto_de_Ciudad_Bol%C3%ADvar.jpg",
+  },
+  "soto-wolleh": {
+    id: "soto-wolleh",
+    work: "Jesús Rafael Soto",
+    place: "Portrait",
+    author: "Lothar Wolleh",
+    license: "CC BY-SA 3.0",
+    page: "https://commons.wikimedia.org/wiki/File:Jesus_Rafael_Soto_by_Lothar_Wolleh.jpg",
+  },
+  "soto-2002": {
+    id: "soto-2002",
+    work: "Jesús Rafael Soto",
+    place: "2002",
+    author: "Audio cepeda",
+    license: "CC BY-SA 3.0",
+    page: "https://commons.wikimedia.org/wiki/File:JES%C3%9AS_SOTO-_Artista_pl%C3%A1stico.jpg",
   },
 };
 
@@ -160,13 +142,53 @@ export const QUOTES = {
   },
 } satisfies Record<string, Quote>;
 
-export type Segment =
-  | { kind: "title"; from: number; to: number; photo: PhotoId; move: Move }
-  | { kind: "photo"; from: number; to: number; photo: PhotoId; move: Move; quote?: Quote; note?: string }
-  | { kind: "lines"; from: number; to: number; quote: Quote }
-  | { kind: "credits"; from: number; to: number };
+export type Clip = { id: string; work: string; place: string; author: string; license: string; page: string; start: number };
 
-const push = (fromX: number, fromY: number, toX: number, toY: number, zoomFrom = 1.05, zoomTo = 1.2): Move => ({
+// Openly licensed footage, trimmed from the 1080p uploads and re-encoded into public/soto/film/clips.
+// The footage license covers the filming; these two Penetrables were temporary shows in Los Angeles and Tokyo.
+export const CLIPS: Record<string, Clip> = {
+  "penetrable-blue-up": {
+    id: "penetrable-blue-up",
+    work: "Pénétrable BBL Bleu",
+    place: "Espace Louis Vuitton, Tokyo",
+    author: "MIYAGAYAOOTAHARA",
+    license: "CC BY 3.0",
+    page: "https://www.youtube.com/watch?v=ZWXg05nn1ZA",
+    start: 0,
+  },
+  "penetrable-yellow-walk": {
+    id: "penetrable-yellow-walk",
+    work: "Penetrable, 1990",
+    place: "LACMA, Los Angeles",
+    author: "Matt Albright",
+    license: "CC BY 3.0",
+    page: "https://www.youtube.com/watch?v=odwDx-AAL_8",
+    start: 0,
+  },
+  "penetrable-blue-wide": {
+    id: "penetrable-blue-wide",
+    work: "Pénétrable BBL Bleu",
+    place: "Espace Louis Vuitton, Tokyo",
+    author: "MIYAGAYAOOTAHARA",
+    license: "CC BY 3.0",
+    page: "https://www.youtube.com/watch?v=ZWXg05nn1ZA",
+    start: 0,
+  },
+};
+
+type Spec =
+  | { kind: "photo"; photo: PhotoId; move: Move; note?: string }
+  | { kind: "portrait"; photo: PhotoId }
+  | { kind: "clip"; clip: string; note?: string }
+  | { kind: "card"; text: string; quote: Quote; attribute: boolean }
+  | { kind: "lines"; quote: Quote }
+  | { kind: "black" }
+  | { kind: "credits" };
+
+export type Segment = Spec & { from: number; to: number };
+
+// Slow and in one direction only: a gentle push in, never a zoom fighting a pan.
+const drift = (fromX: number, fromY: number, toX: number, toY: number, zoomFrom = 1.03, zoomTo = 1.1): Move => ({
   zoomFrom,
   zoomTo,
   fromX,
@@ -175,23 +197,53 @@ const push = (fromX: number, fromY: number, toX: number, toY: number, zoomFrom =
   toY,
 });
 
-// In bars. The music changes on the same bars (see SECTIONS in lounge.ts).
-export const SEGMENTS: Segment[] = [
-  { kind: "title", from: 0, to: 4, photo: "penetrable-looking-up", move: push(0.5, 0.55, 0.5, 0.45, 1.25, 1.05) },
-  { kind: "photo", from: 4, to: 8, photo: "pearl-rain-pampatar", move: push(0.3, 0.5, 0.7, 0.5), quote: QUOTES.motor },
-  { kind: "photo", from: 8, to: 10, photo: "ucv-pre-penetrable-1957", move: push(0.45, 0.5, 0.55, 0.45), note: "Caracas, 1957. He is already in Paris, making space vibrate." },
-  { kind: "photo", from: 10, to: 12, photo: "museo-soto-facade", move: push(0.55, 0.5, 0.45, 0.5), note: "His hometown museum, opened 1973." },
-  { kind: "photo", from: 12, to: 16, photo: "museo-soto-yellow-work", move: push(0.5, 0.6, 0.5, 0.4), quote: QUOTES.nights },
-  { kind: "photo", from: 16, to: 20, photo: "penetrable-amarillo-2", move: push(0.35, 0.5, 0.6, 0.5, 1.1, 1.3), quote: QUOTES.light },
-  { kind: "photo", from: 20, to: 24, photo: "esfera-japon", move: push(0.5, 0.5, 0.5, 0.5, 1.0, 1.25), quote: QUOTES.motion },
-  { kind: "lines", from: 24, to: 28, quote: QUOTES.inside },
-  { kind: "photo", from: 28, to: 32, photo: "penetrable-amarillo-1", move: push(0.5, 0.35, 0.5, 0.6), quote: QUOTES.viewer },
-  { kind: "photo", from: 32, to: 34, photo: "casm-esfera-caracas", move: push(0.65, 0.5, 0.6, 0.45, 1.1, 1.25) },
-  { kind: "photo", from: 34, to: 36, photo: "esfera-caracas-1", move: push(0.35, 0.55, 0.3, 0.5, 1.05, 1.2) },
-  { kind: "photo", from: 36, to: 40, photo: "esfera-caracas-night", move: push(0.25, 0.55, 0.3, 0.55, 1.05, 1.3), quote: QUOTES.participants },
-  { kind: "photo", from: 40, to: 44, photo: "penetrable-looking-up", move: push(0.5, 0.5, 0.5, 0.5, 1.05, 1.4), quote: QUOTES.universe },
-  { kind: "credits", from: 44, to: TOTAL_BARS },
+const card = (quote: Quote, text = quote.text, attribute = true): Spec => ({ kind: "card", text, quote, attribute });
+
+// The title poster shows before play only. It is not in the film, so pressing play never repeats it.
+export const POSTER = { photo: "penetrable-looking-up" as PhotoId, move: drift(0.5, 0.5, 0.5, 0.5, 1.04, 1.04) };
+
+type Mark = "breakdown" | "pulse" | "rush" | "smash" | "drop" | "coda" | "credits";
+
+// Trailer grammar on house phrasing: the breakdown, the second groove and the drop each land on a
+// four-bar line, so the music turns exactly where the picture does. No image is used twice. Lengths are in bars.
+const SEQUENCE: [number, Spec, Mark?][] = [
+  [3, { kind: "photo", photo: "museo-soto-facade", move: drift(0.52, 0.5, 0.48, 0.5), note: "His hometown museum" }],
+  [3, { kind: "photo", photo: "soto-inauguration-1973", move: drift(0.5, 0.45, 0.5, 0.4, 1.02, 1.08) }],
+  [2, card(QUOTES.motor)],
+  [2.5, { kind: "clip", clip: "penetrable-blue-up" }],
+  [3, card(QUOTES.nights)],
+  [2.5, { kind: "portrait", photo: "soto-wolleh" }],
+  [2.5, { kind: "photo", photo: "museo-soto-yellow-work", move: drift(0.5, 0.52, 0.5, 0.48) }],
+  [2, card(QUOTES.light)],
+  [2.5, { kind: "photo", photo: "penetrable-amarillo-2", move: drift(0.44, 0.5, 0.52, 0.5) }],
+  [2.5, card(QUOTES.viewer)],
+  [2.5, { kind: "photo", photo: "esfera-japon", move: drift(0.5, 0.5, 0.5, 0.5, 1.0, 1.08) }],
+  [4, { kind: "lines", quote: QUOTES.inside }, "breakdown"],
+  [2, { kind: "clip", clip: "penetrable-yellow-walk" }, "pulse"],
+  [1, card(QUOTES.participants, "…we are not spectators,", false)],
+  [2, { kind: "clip", clip: "penetrable-blue-wide" }],
+  [1, card(QUOTES.participants, "we are participants!")],
+  [1.75, { kind: "photo", photo: "esfera-caracas-night", move: drift(0.3, 0.55, 0.36, 0.55, 1.05, 1.2) }, "rush"],
+  // One beat of black and silence: long enough to feel the drop coming, short enough not to look broken.
+  [0.25, { kind: "black" }, "smash"],
+  [4, { kind: "photo", photo: "soto-2002", move: drift(0.42, 0.5, 0.42, 0.45, 1.02, 1.1) }, "drop"],
+  [4, card(QUOTES.universe), "coda"],
+  [12, { kind: "credits" }, "credits"],
 ];
+
+const built = SEQUENCE.reduce<{ segments: Segment[]; marks: Partial<Record<Mark, number>>; bar: number }>(
+  (state, [length, spec, mark]) => ({
+    segments: [...state.segments, { ...spec, from: state.bar, to: state.bar + length }],
+    marks: mark ? { ...state.marks, [mark]: state.bar } : state.marks,
+    bar: state.bar + length,
+  }),
+  { segments: [], marks: {}, bar: 0 },
+);
+
+export const SEGMENTS: Segment[] = built.segments;
+export const MARKS = built.marks as Record<Mark, number>;
+export const TOTAL_BARS = built.bar;
+export const TOTAL_SECONDS = TOTAL_BARS * BAR_SECONDS;
 
 export function segmentAt(bar: number): { segment: Segment; index: number } {
   const index = SEGMENTS.findIndex((segment) => bar < segment.to);

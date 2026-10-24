@@ -3,9 +3,20 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { createPlayer, type PlayerState } from "./film/player";
 import { createScore } from "./film/score";
+import { createControlsFlag, createFilmScene, createLibrary } from "./film3/scene";
+import { BAR_SECONDS, CLIPS, PHOTOS, POSTER, QUOTES, SEGMENTS, TOTAL_SECONDS } from "./film3/timeline";
 import { LOUNGE_ARRANGEMENT } from "./film3/lounge";
-import { createFilmScene, createLibrary } from "./film3/scene";
-import { BAR_SECONDS, PHOTOS, QUOTES, SEGMENTS, TOTAL_SECONDS } from "./film3/timeline";
+import {
+  ExitFullscreenIcon,
+  FullscreenIcon,
+  LoopIcon,
+  PauseIcon,
+  PlayIcon,
+  ReplayIcon,
+  ShareIcon,
+  SoundOffIcon,
+  SoundOnIcon,
+} from "./PlayerIcons";
 import { useCanvasLoop } from "./useCanvasLoop";
 
 const LICENSES: Record<string, string> = {
@@ -16,9 +27,15 @@ const LICENSES: Record<string, string> = {
   "CC BY-SA 4.0": "https://creativecommons.org/licenses/by-sa/4.0/",
 };
 
-const USED_PHOTOS = [...new Set(SEGMENTS.flatMap((segment) => ("photo" in segment ? [segment.photo] : [])))].map((id) => PHOTOS[id]);
+const USED_MEDIA = [
+  ...[...new Set([POSTER.photo, ...SEGMENTS.flatMap((segment) => ("photo" in segment ? [segment.photo] : []))])].map((id) => ({ ...PHOTOS[id], kind: "Photo" })),
+  ...[...new Set(SEGMENTS.flatMap((segment) => (segment.kind === "clip" ? [segment.clip] : [])))].map((id) => ({ ...CLIPS[id], kind: "Footage" })),
+];
 
 const subscribeNever = () => () => {};
+
+// How long the controls stay up after the pointer stops, while the film is playing.
+const CHROME_IDLE_MS = 2500;
 
 const formatTime = (seconds: number) => {
   const whole = Math.floor(seconds);
@@ -27,9 +44,15 @@ const formatTime = (seconds: number) => {
 
 const segmentLabel = (index: number) => {
   const segment = SEGMENTS[index];
-  if (segment.kind === "title") return "Title";
   if (segment.kind === "credits") return "Credits";
   if (segment.kind === "lines") return "Interlude";
+  if (segment.kind === "card") {
+    const words = segment.text.replace(/^…/, "").split(" ");
+    return words.length > 5 ? `“${words.slice(0, 5).join(" ")}…”` : `“${words.join(" ")}”`;
+  }
+  if (segment.kind === "black") return "Black";
+  if (segment.kind === "portrait") return "Portrait";
+  if (segment.kind === "clip") return CLIPS[segment.clip].work;
   return PHOTOS[segment.photo].work;
 };
 
@@ -41,12 +64,17 @@ export function SotoInside() {
   const [score] = useState(() => createScore(LOUNGE_ARRANGEMENT));
   const [player] = useState(() => createPlayer(score, TOTAL_SECONDS));
   const [library] = useState(createLibrary);
-  const [createScene] = useState(() => createFilmScene(player, library));
+  const [controls] = useState(createControlsFlag);
+  const [createScene] = useState(() => createFilmScene(player, library, controls.isShowing));
   const [state, setState] = useState<PlayerState>("idle");
   const [segmentIndex, setSegmentIndex] = useState(0);
   const [soundOn, setSoundOn] = useState(false);
   const [looping, setLooping] = useState(false);
   const [shareLabel, setShareLabel] = useState("Share");
+  const [chromeAwake, setChromeAwake] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const chromeTimer = useRef<number | undefined>(undefined);
+  const shareTimer = useRef<number | undefined>(undefined);
   const canFullscreen = useSyncExternalStore(subscribeNever, () => document.fullscreenEnabled, () => false);
   useCanvasLoop(canvasRef, createScene, { alwaysAnimate: true });
 
@@ -77,6 +105,31 @@ export function SotoInside() {
     return () => observer.disconnect();
   }, [library]);
 
+  useEffect(() => {
+    controls.setShowing(state !== "idle" && (state !== "playing" || chromeAwake));
+  }, [controls, state, chromeAwake]);
+
+  useEffect(() => {
+    const onChange = () => setIsFullscreen(document.fullscreenElement === stageRef.current);
+    document.addEventListener("fullscreenchange", onChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", onChange);
+      window.clearTimeout(chromeTimer.current);
+      window.clearTimeout(shareTimer.current);
+    };
+  }, []);
+
+  const wakeChrome = () => {
+    setChromeAwake(true);
+    window.clearTimeout(chromeTimer.current);
+    chromeTimer.current = window.setTimeout(() => setChromeAwake(false), CHROME_IDLE_MS);
+  };
+
+  const sleepChrome = () => {
+    window.clearTimeout(chromeTimer.current);
+    setChromeAwake(false);
+  };
+
   const setSound = async (next: boolean) => {
     try {
       await score.setEnabled(next);
@@ -87,14 +140,16 @@ export function SotoInside() {
     }
   };
 
-  const start = async (withSound: boolean) => {
+  // Sound is the default: the film is cut to the music. The mute button in the controls turns it off.
+  const start = async () => {
     library.load();
-    if (withSound) await setSound(true);
+    await setSound(true);
     player.play();
+    wakeChrome();
   };
 
   const toggle = () => {
-    if (state === "idle") start(true);
+    if (state === "idle") start();
     else if (state === "playing") player.pause();
     else player.play();
   };
@@ -118,6 +173,12 @@ export function SotoInside() {
     }
   };
 
+  const flashShareLabel = (label: string) => {
+    setShareLabel(label);
+    window.clearTimeout(shareTimer.current);
+    shareTimer.current = window.setTimeout(() => setShareLabel("Share"), 2000);
+  };
+
   const share = async () => {
     const url = `${window.location.origin}${window.location.pathname}#film`;
     try {
@@ -126,88 +187,107 @@ export function SotoInside() {
         return;
       }
       await navigator.clipboard.writeText(url);
-      setShareLabel("Link copied");
+      flashShareLabel("Link copied");
     } catch (error) {
       // Closing the share sheet rejects with AbortError; that is the viewer changing their mind, not a failure.
       if (error instanceof DOMException && error.name === "AbortError") return;
       console.error("Soto film: share failed", error);
-      setShareLabel("Couldn't share");
+      flashShareLabel("Couldn't share");
     }
   };
 
   const segment = SEGMENTS[segmentIndex];
   const liveText =
-    state === "idle" ? "" : "quote" in segment && segment.quote ? `Jesús Rafael Soto: ${segment.quote.text}` : segmentLabel(segmentIndex);
+    state === "idle"
+      ? ""
+      : segment.kind === "card" || segment.kind === "lines"
+        ? `Jesús Rafael Soto: ${segment.kind === "card" ? segment.text : segment.quote.text}`
+        : segmentLabel(segmentIndex);
 
   return (
     <div className="soto-film">
-      <div className="soto-film-stage soto-inside-stage" ref={stageRef}>
+      <div
+        className={`soto-film-stage soto-inside-stage${state === "playing" && !chromeAwake ? " is-chrome-asleep" : ""}`}
+        ref={stageRef}
+        onPointerMove={wakeChrome}
+        onPointerDown={wakeChrome}
+        onPointerLeave={sleepChrome}
+        onFocus={wakeChrome}
+      >
         <canvas ref={canvasRef} className="soto-canvas" aria-hidden="true" />
 
         {state === "idle" && (
           <div className="soto-film-start soto-inside-start">
-            <button type="button" className="soto-film-play soto-inside-play" onClick={() => start(true)}>
-              <span className="soto-film-play-meta">Play with sound · 1:39</span>
-            </button>
-            <button type="button" className="soto-film-quiet" onClick={() => start(false)}>
-              or play muted
+            <button type="button" className="soto-inside-play" onClick={start}>
+              <PlayIcon />
+              <span>Play</span>
+              <span className="soto-inside-play-time">{formatTime(TOTAL_SECONDS)}</span>
             </button>
           </div>
         )}
 
         {state === "ended" && (
-          <div className="soto-film-end">
-            <button type="button" className="soto-film-chip" onClick={() => player.play()}>
+          <div className="soto-inside-end">
+            <button type="button" className="soto-inside-pill" onClick={() => player.play()}>
+              <ReplayIcon />
               Replay
             </button>
-            <button type="button" className="soto-film-chip" onClick={share}>
+            <button type="button" className="soto-inside-pill" onClick={share}>
+              <ShareIcon />
               {shareLabel}
             </button>
           </div>
         )}
 
-        {state !== "idle" && (
-          <div className="soto-film-hud">
-            <button type="button" className="soto-film-chip" aria-pressed={soundOn} onClick={() => setSound(!soundOn)}>
-              {soundOn ? "Sound on" : "Sound off"}
+        <div className="soto-player" hidden={state === "idle"}>
+          <div className="soto-player-track">
+            <div className="soto-player-fill" ref={fillRef} />
+            {SEGMENTS.map((item, index) => (
+              <button
+                key={`${item.kind}-${item.from}`}
+                type="button"
+                className="soto-player-segment"
+                style={{ flexGrow: item.to - item.from }}
+                onClick={() => jump(index)}
+                aria-label={`Jump to ${segmentLabel(index)}`}
+                data-label={segmentLabel(index)}
+              />
+            ))}
+          </div>
+          <div className="soto-player-row">
+            <button type="button" className="soto-player-button" onClick={toggle} aria-label={state === "playing" ? "Pause" : state === "ended" ? "Replay" : "Play"}>
+              {state === "playing" ? <PauseIcon /> : state === "ended" ? <ReplayIcon /> : <PlayIcon />}
             </button>
-            <button type="button" className="soto-film-chip" aria-pressed={looping} onClick={toggleLoop}>
-              Loop
+            <button type="button" className="soto-player-button" onClick={() => setSound(!soundOn)} aria-label={soundOn ? "Mute" : "Unmute"}>
+              {soundOn ? <SoundOnIcon /> : <SoundOffIcon />}
+            </button>
+            <span className="soto-player-clock">
+              <span ref={clockRef}>0:00</span> / {formatTime(TOTAL_SECONDS)}
+            </span>
+            <span className="soto-player-spacer" />
+            <button type="button" className="soto-player-button" onClick={share} aria-label={shareLabel}>
+              <ShareIcon />
+              {shareLabel !== "Share" && (
+                <span className="soto-player-toast" role="status">
+                  {shareLabel}
+                </span>
+              )}
+            </button>
+            <button type="button" className="soto-player-button" aria-pressed={looping} onClick={toggleLoop} aria-label="Loop">
+              <LoopIcon />
             </button>
             {canFullscreen && (
-              <button type="button" className="soto-film-chip" onClick={toggleFullscreen}>
-                Fullscreen
+              <button type="button" className="soto-player-button" onClick={toggleFullscreen} aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}>
+                {isFullscreen ? <ExitFullscreenIcon /> : <FullscreenIcon />}
               </button>
             )}
           </div>
-        )}
+        </div>
       </div>
 
       <p className="soto-film-live" aria-live="polite">
         {liveText}
       </p>
-
-      <div className="soto-film-controls">
-        <button type="button" className="soto-clip-toggle" onClick={toggle}>
-          {state === "playing" ? "Pause" : state === "ended" ? "Replay" : "Play"}
-        </button>
-        <div className="soto-film-track">
-          <div className="soto-film-fill" ref={fillRef} />
-          {SEGMENTS.map((item, index) => (
-            <button
-              key={`${item.kind}-${item.from}`}
-              type="button"
-              className={`soto-film-segment${index === segmentIndex && state !== "idle" ? " is-current" : ""}`}
-              style={{ flexGrow: item.to - item.from }}
-              onClick={() => jump(index)}
-              aria-label={`Jump to ${segmentLabel(index)}`}
-            />
-          ))}
-        </div>
-        <span className="soto-film-clock">
-          <span ref={clockRef}>0:00</span> / {formatTime(TOTAL_SECONDS)}
-        </span>
-      </div>
 
       <details className="soto-credits">
         <summary>Credits and sources</summary>
@@ -218,10 +298,10 @@ export function SotoInside() {
           <a href={QUOTES.inside.url}>Centre Pompidou</a> page, quoting Ariel Jiménez&apos;s <em>Conversaciones con Jesús Soto</em>.
         </p>
         <ul>
-          {USED_PHOTOS.map((photo) => (
-            <li key={photo.id}>
-              <a href={photo.page}>{photo.work}</a>, {photo.place}. Photo by {photo.author},{" "}
-              <a href={LICENSES[photo.license]}>{photo.license}</a>, cropped and color graded.
+          {USED_MEDIA.map((media) => (
+            <li key={media.id}>
+              <a href={media.page}>{media.work}</a>, {media.place}. {media.kind} by {media.author},{" "}
+              <a href={LICENSES[media.license]}>{media.license}</a>, cropped and color graded.
             </li>
           ))}
         </ul>
