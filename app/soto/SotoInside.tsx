@@ -148,6 +148,7 @@ export function SotoInside() {
   // Sound is the default: the film is cut to the music. The mute button in the controls turns it off.
   const start = async () => {
     library.load();
+    library.prime();
     await setSound(true);
     player.play();
     wakeChrome();
