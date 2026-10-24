@@ -7,7 +7,10 @@ import { BAR_SECONDS, CLIPS, PHOTOS, POSTER, SEGMENTS, segmentAt, type PhotoId, 
 export type Library = {
   photo: (id: PhotoId) => HTMLImageElement | null;
   clip: (id: string) => HTMLVideoElement | null;
+  video: (id: string) => HTMLVideoElement | null;
   load: () => void;
+  prime: () => void;
+  isPriming: (id: string) => boolean;
 };
 
 const usedPhotos = [...new Set([POSTER.photo, ...SEGMENTS.flatMap((segment) => ("photo" in segment ? [segment.photo] : []))])];
@@ -17,6 +20,7 @@ const usedClips = [...new Set(SEGMENTS.flatMap((segment) => (segment.kind === "c
 export function createLibrary(): Library {
   const images = new Map<PhotoId, HTMLImageElement>();
   const videos = new Map<string, HTMLVideoElement>();
+  const priming = new Set<string>();
   let started = false;
   return {
     photo(id) {
@@ -26,6 +30,26 @@ export function createLibrary(): Library {
     clip(id) {
       const video = videos.get(id);
       return video && video.readyState >= 2 ? video : null;
+    },
+    // The element itself, frame or not. iOS fetches nothing until play() is called, so playback can't wait for a frame.
+    video(id) {
+      return videos.get(id) ?? null;
+    },
+    // Called inside the Play tap. A play() from a user gesture starts the download and unlocks later play() calls,
+    // which iOS otherwise refuses in Low Power Mode.
+    prime() {
+      for (const [id, video] of videos) {
+        if (!video.paused) continue;
+        priming.add(id);
+        video
+          .play()
+          .then(() => video.pause())
+          .catch((error: unknown) => console.error(`Soto film: could not prime clip ${id}`, error))
+          .finally(() => priming.delete(id));
+      }
+    },
+    isPriming(id) {
+      return priming.has(id);
     },
     load() {
       if (started) return;
@@ -41,6 +65,9 @@ export function createLibrary(): Library {
         const video = document.createElement("video");
         video.muted = true;
         video.playsInline = true;
+        // Older iOS checks the attributes, not the properties, before it allows inline muted playback.
+        video.setAttribute("muted", "");
+        video.setAttribute("playsinline", "");
         video.preload = "auto";
         video.onerror = () => console.error(`Soto film: could not load clip ${id}`);
         video.src = `/soto/film/clips/${id}.mp4`;
@@ -315,11 +342,11 @@ function drawSegment(shared: Shared, segment: Segment, local: number) {
 function syncClips(library: Library, bar: number, playing: boolean) {
   for (const segment of SEGMENTS) {
     if (segment.kind !== "clip") continue;
-    const video = library.clip(segment.clip);
+    const video = library.video(segment.clip);
     if (!video) continue;
     const active = bar >= segment.from && bar < segment.to;
     if (!active) {
-      if (!video.paused) video.pause();
+      if (!video.paused && !library.isPriming(segment.clip)) video.pause();
       continue;
     }
     const target = CLIPS[segment.clip].start + (bar - segment.from) * BAR_SECONDS;
