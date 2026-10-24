@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type PointerEvent } from "react";
 import { createPlayer, type PlayerState } from "./film/player";
 import { createScore } from "./film/score";
 import { createControlsFlag, createFilmScene, createLibrary } from "./film3/scene";
@@ -34,8 +34,10 @@ const USED_MEDIA = [
 
 const subscribeNever = () => () => {};
 
-// How long the controls stay up after the pointer stops, while the film is playing.
+// How long the controls stay up after the pointer stops, while the film is playing. Touch gets longer:
+// there is no hover, so the viewer has to find the button after the tap that revealed it.
 const CHROME_IDLE_MS = 2500;
+const CHROME_IDLE_TOUCH_MS = 4000;
 
 const formatTime = (seconds: number) => {
   const whole = Math.floor(seconds);
@@ -119,13 +121,16 @@ export function SotoInside() {
     };
   }, []);
 
-  const wakeChrome = () => {
+  const wakeChrome = (event?: { pointerType?: string }) => {
     setChromeAwake(true);
     window.clearTimeout(chromeTimer.current);
-    chromeTimer.current = window.setTimeout(() => setChromeAwake(false), CHROME_IDLE_MS);
+    const idle = event?.pointerType === "touch" ? CHROME_IDLE_TOUCH_MS : CHROME_IDLE_MS;
+    chromeTimer.current = window.setTimeout(() => setChromeAwake(false), idle);
   };
 
-  const sleepChrome = () => {
+  // Only a mouse really leaves. A finger "leaves" every time it lifts, which would hide the controls mid-tap.
+  const sleepChrome = (event: PointerEvent) => {
+    if (event.pointerType !== "mouse") return;
     window.clearTimeout(chromeTimer.current);
     setChromeAwake(false);
   };
@@ -212,7 +217,7 @@ export function SotoInside() {
         onPointerMove={wakeChrome}
         onPointerDown={wakeChrome}
         onPointerLeave={sleepChrome}
-        onFocus={wakeChrome}
+        onFocus={() => wakeChrome()}
       >
         <canvas ref={canvasRef} className="soto-canvas" aria-hidden="true" />
 
