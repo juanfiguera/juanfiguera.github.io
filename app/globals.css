@@ -1402,14 +1402,6 @@ i {
   background: var(--ink);
   border-color: var(--ink);
 }
-.foot-link {
-  color: var(--ink-mute);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-.foot-link:hover {
-  color: var(--shu);
-}
 @media (max-width: 560px) {
   /* The stage is too short on phones to hold the caption, so it moves below the picture. */
   .soto-clip-caption {
